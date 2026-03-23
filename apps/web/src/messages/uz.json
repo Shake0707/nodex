@@ -1,0 +1,84 @@
+{
+    "header": {
+        "home": "Bosh sahifa",
+        "about": "Biz haqimizda",
+        "team": "Jamoa",
+        "events": "CTF",
+        "partners": "Hamkorlar",
+        "contact": "Aloqa",
+        "telegram": "Telegram"
+    },
+    "hero": {
+        "title": "Nodex",
+        "titleSuffix": "— Kiberxavfsizlik klubi",
+        "subtitle": "Al-Xorazmiy nomidagi ixtisoslashtirilgan maktab qoshidagi kiberxavfsizlik klubi. Biz bilan bilimingizni oshiring, CTF musobaqalarida ishtirok eting va kelajakni birga quring.",
+        "btnDetails": "Batafsil",
+        "btnTelegram": "Telegram kanal",
+        "statMembers": "A'zolar",
+        "statEvents": "CTF musobaqalar",
+        "statPartners": "Hamkorlar"
+    },
+    "about": {
+        "label": "// Biz haqimizda",
+        "title": "Nima uchun Nodex?",
+        "subtitle": "Nodex — bu kiberxavfsizlikka qiziquvchi o'quvchilar uchun bilim, tajriba va musobaqalar markazi. Biz kelajakning kibermudofaachilarini tayyorlaymiz.",
+        "feature1Title": "Bepul darslar",
+        "feature1Desc": "Kiberxavfsizlik asoslari, tarmoq xavfsizligi va etik xakerlik bo'yicha bepul darslar.",
+        "feature2Title": "Amaliy mashg'ulotlar",
+        "feature2Desc": "Real stsenariylarda amaliy tajriba: penetration testing, forensics va boshqalar.",
+        "feature3Title": "CTF musobaqalar",
+        "feature3Desc": "Capture The Flag musobaqalarida ishtirok eting va o'z ko'nikmalaringizni sinab ko'ring.",
+        "feature4Title": "Mutaxassislar masterklasslari",
+        "feature4Desc": "Soha mutaxassislari bilan masterklasslar va networking imkoniyatlari."
+    },
+    "team": {
+        "label": "// Jamoa",
+        "title": "Bizning jamoa",
+        "subtitle": "Nodex jamoasi — bu kiberxavfsizlikka ishtiyoqi bor talantli o'quvchilar.",
+        "empty": "Hozircha a'zolar yo'q"
+    },
+    "events": {
+        "label": "// CTF va Tadbirlar",
+        "title": "Tadbirlarimiz",
+        "subtitle": "CTF musobaqalari, hackathonlar va kiberxavfsizlik bo'yicha seminarlar.",
+        "empty": "Hozircha tadbirlar yo'q",
+        "showAll": "Barcha tadbirlar"
+    },
+    "partners": {
+        "label": "// Hamkorlar",
+        "title": "Bizning hamkorlar",
+        "subtitle": "Nodex klubi bilan hamkorlik qilayotgan tashkilotlar.",
+        "empty": "Hozircha hamkorlar yo'q"
+    },
+    "contact": {
+        "label": "// Aloqa",
+        "title": "Biz bilan bog'laning",
+        "subtitle": "Savol, taklif yoki hamkorlik bo'yicha — Telegram orqali biz bilan bog'laning. Nodex botimiz orqali tezkor javob oling.",
+        "btnBot": "@nodexccbot — Bot",
+        "btnChannel": "Telegram kanal"
+    },
+    "footer": {
+        "desc": "Al-Xorazmiy nomidagi ixtisoslashtirilgan maktab — Kiberxavfsizlik klubi",
+        "copyright": "Nodex. Barcha huquqlar himoyalangan."
+    },
+    "eventsPage": {
+        "label": "// Tadbirlar",
+        "title": "Barcha tadbirlar",
+        "subtitle": "CTF musobaqalari, hackathonlar va kiberxavfsizlik bo'yicha seminarlar.",
+        "searchPlaceholder": "Tadbirlarni qidirish...",
+        "found": "{count} ta tadbir topildi",
+        "noResults": "Hech narsa topilmadi",
+        "empty": "Hozircha tadbirlar yo'q",
+        "sortDateDesc": "Yangi avval",
+        "sortDateAsc": "Eski avval",
+        "sortTitleAsc": "Nomi (A-Z)",
+        "sortTitleDesc": "Nomi (Z-A)"
+    },
+    "eventDetail": {
+        "back": "← Barcha tadbirlar",
+        "date": "📅 Sana",
+        "location": "📍 Joylashuv",
+        "description": "Batafsil",
+        "gallery": "📸 Galereya"
+    }
+}

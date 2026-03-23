@@ -1,0 +1,84 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About us",
+        "team": "Team",
+        "events": "CTF",
+        "partners": "Partners",
+        "contact": "Contact",
+        "telegram": "Telegram"
+    },
+    "hero": {
+        "title": "Nodex",
+        "titleSuffix": "— Cybersecurity Club",
+        "subtitle": "Cybersecurity club at Al-Khorezmi Specialized School. Enhance your knowledge, compete in CTF challenges, and build the future with us.",
+        "btnDetails": "Learn more",
+        "btnTelegram": "Telegram channel",
+        "statMembers": "Members",
+        "statEvents": "CTF competitions",
+        "statPartners": "Partners"
+    },
+    "about": {
+        "label": "// About us",
+        "title": "Why Nodex?",
+        "subtitle": "Nodex is a hub for knowledge, experience, and competitions for students passionate about cybersecurity. We train the cyber defenders of the future.",
+        "feature1Title": "Free lessons",
+        "feature1Desc": "Free courses on cybersecurity fundamentals, network security, and ethical hacking.",
+        "feature2Title": "Hands-on practice",
+        "feature2Desc": "Real-world experience: penetration testing, forensics, and more.",
+        "feature3Title": "CTF competitions",
+        "feature3Desc": "Participate in Capture The Flag competitions and test your skills.",
+        "feature4Title": "Expert masterclasses",
+        "feature4Desc": "Masterclasses with industry experts and networking opportunities."
+    },
+    "team": {
+        "label": "// Team",
+        "title": "Our team",
+        "subtitle": "The Nodex team — talented students passionate about cybersecurity.",
+        "empty": "No team members yet"
+    },
+    "events": {
+        "label": "// CTF & Events",
+        "title": "Our events",
+        "subtitle": "CTF competitions, hackathons, and cybersecurity seminars.",
+        "empty": "No events yet",
+        "showAll": "All events"
+    },
+    "partners": {
+        "label": "// Partners",
+        "title": "Our partners",
+        "subtitle": "Organizations partnering with the Nodex club.",
+        "empty": "No partners yet"
+    },
+    "contact": {
+        "label": "// Contact",
+        "title": "Get in touch",
+        "subtitle": "Questions, suggestions, or partnerships — reach out to us via Telegram. Get quick answers through our Nodex bot.",
+        "btnBot": "@nodexccbot — Bot",
+        "btnChannel": "Telegram channel"
+    },
+    "footer": {
+        "desc": "Al-Khorezmi Specialized School — Cybersecurity Club",
+        "copyright": "Nodex. All rights reserved."
+    },
+    "eventsPage": {
+        "label": "// Events",
+        "title": "All events",
+        "subtitle": "CTF competitions, hackathons, and cybersecurity seminars.",
+        "searchPlaceholder": "Search events...",
+        "found": "{count} events found",
+        "noResults": "No results found",
+        "empty": "No events yet",
+        "sortDateDesc": "Newest first",
+        "sortDateAsc": "Oldest first",
+        "sortTitleAsc": "Title (A-Z)",
+        "sortTitleDesc": "Title (Z-A)"
+    },
+    "eventDetail": {
+        "back": "← All events",
+        "date": "📅 Date",
+        "location": "📍 Location",
+        "description": "Details",
+        "gallery": "📸 Gallery"
+    }
+}

@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Member {
+  id             Int      @id @default(autoincrement())
+  name_uz        String
+  name_en        String
+  name_ru        String
+  role_uz        String
+  role_en        String
+  role_ru        String
+  description_uz String
+  description_en String
+  description_ru String
+  photo_url      String   @default("")
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  @@map("members")
+}
+
+model Event {
+  id                Int      @id @default(autoincrement())
+  title_uz          String
+  title_en          String
+  title_ru          String
+  description_uz    String
+  description_en    String
+  description_ru    String
+  image_url         String   @default("")
+  preview_image_url String   @default("")
+  images            Json     @default("[]")
+  event_date        DateTime
+  location          String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  @@map("events")
+}
+
+model Partner {
+  id              Int      @id @default(autoincrement())
+  name            String
+  logo_image_url  String   @default("")
+  website_url     String?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  @@map("partners")
+}
+
+model Admin {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  password_hash String
+  created_at    DateTime @default(now())
+
+  @@map("admins")
+}
