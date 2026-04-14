@@ -2,74 +2,116 @@
 
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { FadeIn, ScaleIn } from '@/components/animations';
+import { FadeIn } from '@/components/animations';
 
 export default function Contact() {
     const t = useTranslations('contact');
 
     return (
-        <section id="contact" className="py-16 md:py-24 bg-bg-dark overflow-hidden relative">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-cyber-glow/20 to-transparent" />
-            <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/[0.06] rounded-full blur-[120px]" />
-            <div className="absolute bottom-[-50px] right-[-50px] w-48 h-48 border border-primary/10 rounded-full" />
-            <div className="absolute top-20 left-10 w-24 h-24 border border-cyber-glow/10 rounded-full" />
+        <section
+            id="contact"
+            className="relative overflow-hidden"
+            style={{ background: 'var(--color-bg-alt)' }}
+        >
+            {/* Full-bleed pink gradient band */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'linear-gradient(135deg, rgba(168,85,247,0.12) 0%, rgba(0,212,255,0.06) 50%, transparent 100%)',
+                }}
+            />
 
-            <div className="max-w-[1200px] mx-auto px-4 md:px-6 relative">
-                <div className="text-center max-w-[600px] mx-auto">
-                    <FadeIn>
-                        <span className="block font-mono text-sm font-medium text-cyber-glow uppercase tracking-[2px] mb-3">{t('label')}</span>
-                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{t('title')}</h2>
-                        <p className="text-text-on-dark opacity-80 text-base md:text-lg mb-10">{t('subtitle')}</p>
-                    </FadeIn>
+            {/* Grid overlay */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+                    backgroundSize: '60px 60px',
+                }}
+            />
 
-                    <ScaleIn delay={0.2}>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                            <motion.a
-                                href="https://t.me/nodexccbot"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-white font-semibold rounded-xl shadow-[0_4px_20px_rgba(0,102,255,0.3)]"
-                                whileHover={{ y: -4, boxShadow: '0 8px 35px rgba(0,102,255,0.5)' }}
-                                whileTap={{ scale: 0.97 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                🤖 {t('btnBot')}
-                            </motion.a>
-                            <motion.a
-                                href="https://t.me/nodexcc"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-xl"
-                                whileHover={{ y: -4, borderColor: 'rgba(255,255,255,0.6)', backgroundColor: 'rgba(255,255,255,0.08)' }}
-                                whileTap={{ scale: 0.97 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                📢 {t('btnChannel')}
-                            </motion.a>
-                        </div>
-                    </ScaleIn>
+            {/* Top border */}
+            <div
+                className="absolute top-0 left-0 right-0 h-px"
+                style={{ background: 'linear-gradient(90deg, transparent, rgba(168,85,247,0.5), rgba(0,212,255,0.3), transparent)' }}
+            />
 
-                    {/* Social proof / trust badges */}
-                    <FadeIn delay={0.3}>
-                        <div className="flex items-center justify-center gap-8 text-text-on-dark opacity-40">
-                            <div className="flex flex-col items-center">
-                                <span className="text-lg">🔒</span>
-                                <span className="text-[10px] mt-1 font-mono">Secure</span>
+            <div className="max-w-[800px] mx-auto px-5 md:px-8 py-28 md:py-36 relative text-center">
+
+                <FadeIn>
+                    <span className="section-label mb-5">{t('label')}</span>
+                    <h2
+                        className="text-4xl md:text-6xl font-black mb-6 leading-[1.0]"
+                        style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.03em' }}
+                    >
+                        {t('title')}
+                    </h2>
+                    <p
+                        className="text-base md:text-lg leading-relaxed mb-12 max-w-[440px] mx-auto"
+                        style={{ color: 'rgba(245,243,255,0.4)' }}
+                    >
+                        {t('subtitle')}
+                    </p>
+                </FadeIn>
+
+                <FadeIn delay={0.1}>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <motion.a
+                            href="https://t.me/nodexccbot"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-primary"
+                            whileHover={{ y: -3 }}
+                            whileTap={{ scale: 0.97 }}
+                        >
+                            🤖 {t('btnBot')}
+                        </motion.a>
+                        <motion.a
+                            href="https://t.me/nodexcc"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-outline"
+                            whileHover={{ y: -3 }}
+                            whileTap={{ scale: 0.97 }}
+                        >
+                            📢 {t('btnChannel')}
+                        </motion.a>
+                    </div>
+                </FadeIn>
+
+                {/* Technical decorative details */}
+                <FadeIn delay={0.2}>
+                    <div
+                        className="flex items-center justify-center gap-8 mt-14 flex-wrap"
+                        style={{ color: 'rgba(245,243,255,0.15)' }}
+                    >
+                        {[
+                            { label: '41°17′N 69°15′E', desc: 'Tashkent, UZ' },
+                            { label: 'EST. 2024', desc: 'Founded' },
+                            { label: 'NODEX-CC', desc: 'Handle' },
+                        ].map((item, i, arr) => (
+                            <div key={i} className="flex items-center gap-8">
+                                <div className="text-center">
+                                    <div
+                                        className="text-[11px] font-mono tracking-wider mb-0.5"
+                                        style={{ color: 'rgba(245,243,255,0.2)' }}
+                                    >
+                                        {item.label}
+                                    </div>
+                                    <div
+                                        className="text-[9px] font-mono tracking-widest uppercase"
+                                        style={{ color: 'rgba(245,243,255,0.1)' }}
+                                    >
+                                        {item.desc}
+                                    </div>
+                                </div>
+                                {i < arr.length - 1 && (
+                                    <div className="w-px h-6" style={{ background: 'rgba(255,255,255,0.07)' }} />
+                                )}
                             </div>
-                            <div className="w-px h-6 bg-white/10" />
-                            <div className="flex flex-col items-center">
-                                <span className="text-lg">⚡</span>
-                                <span className="text-[10px] mt-1 font-mono">Fast</span>
-                            </div>
-                            <div className="w-px h-6 bg-white/10" />
-                            <div className="flex flex-col items-center">
-                                <span className="text-lg">🌍</span>
-                                <span className="text-[10px] mt-1 font-mono">Global</span>
-                            </div>
-                        </div>
-                    </FadeIn>
-                </div>
+                        ))}
+                    </div>
+                </FadeIn>
             </div>
         </section>
     );

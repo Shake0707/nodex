@@ -1,10 +1,17 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaNeon } from '@prisma/adapter-neon';
+import { neonConfig } from '@neondatabase/serverless';
 import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
+import ws from 'ws';
 
 dotenv.config();
 
-const prisma = new PrismaClient();
+neonConfig.webSocketConstructor = ws;
+
+const connectionString = process.env.DATABASE_URL!;
+const adapter = new PrismaNeon({ connectionString });
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
     const username = process.env.ADMIN_USERNAME || 'admin';

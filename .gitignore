@@ -39,3 +39,18 @@ apps/api/prisma/migrations
 # Uploads
 apps/api/uploads/*
 !apps/api/uploads/.gitkeep
+
+# Claude Code
+.claude/
+.claudeignore
+.superpowers/
+
+# Project docs (local only)
+CLAUDE.md
+DESIGN.md
+docs/
+
+# Screenshots (dev utility)
+temporary screenshots/
+screenshot.mjs
+scroll-shot.mjs

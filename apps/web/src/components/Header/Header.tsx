@@ -13,7 +13,6 @@ export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
-    // Check if on landing page (e.g. /uz, /en, /ru)
     const isLanding = pathname === `/${locale}` || pathname === `/${locale}/`;
     const base = isLanding ? '' : `/${locale}/`;
 
@@ -32,74 +31,191 @@ export default function Header() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    useEffect(() => {
+        document.body.style.overflow = menuOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [menuOpen]);
+
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 h-[72px] bg-white/95 backdrop-blur-md border-b border-black/5 z-[1000] transition-all ${scrolled ? 'shadow-md' : ''
-                }`}
-        >
-            <div className="max-w-[1200px] mx-auto px-6 h-full flex items-center justify-between">
-                <a href={`/${locale}/`} className="flex items-center gap-2.5 text-xl font-extrabold text-primary tracking-tight">
-                    <Image src="/logo.png" alt="Nodex" width={40} height={40} className="w-10 h-10 rounded-[10px] object-cover" />
-                    NODEX
-                </a>
+        <>
+            <header
+                className="fixed top-0 left-0 right-0 z-[1000] transition-all duration-300"
+                style={{
+                    height: '56px',
+                    background: scrolled ? 'rgba(4,4,8,0.97)' : 'rgba(4,4,8,0.8)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    borderBottom: scrolled
+                        ? '1px solid rgba(168,85,247,0.2)'
+                        : '1px solid rgba(255,255,255,0.05)',
+                }}
+            >
+                <div className="max-w-[1200px] mx-auto px-5 md:px-8 h-full flex items-center justify-between">
 
-                <nav className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.href}
-                            href={link.href}
-                            className="text-[0.95rem] font-medium text-text-muted hover:text-primary transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full after:rounded-sm"
+                    {/* Logo */}
+                    <a href={`/${locale}/`} className="flex items-center gap-2.5 group">
+                        <div className="relative w-8 h-8 overflow-hidden rounded">
+                            <Image
+                                src="/logo.png"
+                                alt="Nodex"
+                                width={32}
+                                height={32}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                        <span
+                            className="text-[15px] font-black tracking-widest text-white"
+                            style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.15em' }}
                         >
-                            {link.label}
-                        </a>
-                    ))}
-                </nav>
-
-                <div className="hidden md:flex items-center gap-3">
-                    <LanguageSwitcher />
-                    <a
-                        href="https://t.me/nodexccbot"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(0,102,255,0.3)] transition-all"
-                    >
-                        📢 {t('telegram')}
+                            NODEX
+                        </span>
                     </a>
-                </div>
 
-                <div
-                    className="flex md:hidden flex-col gap-[5px] w-7 cursor-pointer z-[1001]"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    <span className={`w-full h-[3px] bg-text rounded-sm transition-all ${menuOpen ? 'rotate-45 translate-x-[5px] translate-y-[6px]' : ''}`} />
-                    <span className={`w-full h-[3px] bg-text rounded-sm transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-                    <span className={`w-full h-[3px] bg-text rounded-sm transition-all ${menuOpen ? '-rotate-45 translate-x-[5px] -translate-y-[6px]' : ''}`} />
-                </div>
-            </div>
+                    {/* Desktop nav */}
+                    <nav className="hidden md:flex items-center gap-6">
+                        {navLinks.map((link) => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                className="relative text-[13px] font-medium transition-colors duration-200 group"
+                                style={{
+                                    color: 'rgba(245,243,255,0.45)',
+                                    fontFamily: 'var(--font-display)',
+                                    letterSpacing: '0.04em',
+                                }}
+                                onMouseEnter={e => (e.currentTarget.style.color = '#F5F3FF')}
+                                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,255,0.45)')}
+                            >
+                                {link.label}
+                                <span
+                                    className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full transition-all duration-300"
+                                    style={{ background: '#A855F7' }}
+                                />
+                            </a>
+                        ))}
+                    </nav>
 
-            {menuOpen && (
-                <div className="fixed inset-0 bg-white/[0.98] backdrop-blur-xl z-[999] flex flex-col items-center justify-center gap-6">
-                    {navLinks.map((link) => (
+                    {/* Desktop right */}
+                    <div className="hidden md:flex items-center gap-3">
+                        <LanguageSwitcher />
                         <a
-                            key={link.href}
-                            href={link.href}
-                            className="text-xl font-semibold text-text hover:text-primary transition-colors"
-                            onClick={() => setMenuOpen(false)}
+                            href="https://t.me/nodexccbot"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-primary text-[13px]"
+                            style={{ padding: '8px 20px' }}
                         >
-                            {link.label}
+                            {t('telegram')}
                         </a>
-                    ))}
-                    <LanguageSwitcher />
+                    </div>
+
+                    {/* Mobile burger */}
+                    <button
+                        className="flex md:hidden flex-col gap-[5px] w-7 z-[1001] p-1"
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        aria-label="Menu"
+                    >
+                        <span
+                            className="block w-full h-[1.5px] transition-all duration-300"
+                            style={{
+                                background: menuOpen ? '#A855F7' : '#F5F3FF',
+                                transform: menuOpen ? 'rotate(45deg) translate(4.5px, 4.5px)' : 'none',
+                            }}
+                        />
+                        <span
+                            className="block w-full h-[1.5px] transition-all duration-300"
+                            style={{
+                                background: '#A855F7',
+                                opacity: menuOpen ? 0 : 1,
+                            }}
+                        />
+                        <span
+                            className="block w-full h-[1.5px] transition-all duration-300"
+                            style={{
+                                background: menuOpen ? '#A855F7' : '#F5F3FF',
+                                transform: menuOpen ? 'rotate(-45deg) translate(4.5px, -4.5px)' : 'none',
+                            }}
+                        />
+                    </button>
+                </div>
+            </header>
+
+            {/* Mobile drawer — slide in from right */}
+            <div
+                className="fixed inset-0 z-[998] md:hidden transition-all duration-400"
+                style={{
+                    pointerEvents: menuOpen ? 'all' : 'none',
+                }}
+            >
+                {/* Backdrop */}
+                <div
+                    className="absolute inset-0 transition-opacity duration-300"
+                    style={{
+                        background: 'rgba(4,4,8,0.7)',
+                        backdropFilter: 'blur(4px)',
+                        opacity: menuOpen ? 1 : 0,
+                    }}
+                    onClick={() => setMenuOpen(false)}
+                />
+
+                {/* Drawer panel */}
+                <div
+                    className="absolute top-0 right-0 h-full w-72 flex flex-col pt-20 pb-8 px-8 transition-transform duration-400"
+                    style={{
+                        background: '#08080F',
+                        borderLeft: '1px solid rgba(168,85,247,0.15)',
+                        transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+                    }}
+                >
+                    {/* Pink accent line at top */}
+                    <div
+                        className="absolute top-0 left-0 right-0 h-px"
+                        style={{ background: 'linear-gradient(90deg, transparent, #A855F7, transparent)' }}
+                    />
+
+                    <nav className="flex flex-col gap-1 mb-8">
+                        {navLinks.map((link, i) => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                className="py-3 text-[15px] font-semibold border-b transition-colors duration-200"
+                                style={{
+                                    color: 'rgba(245,243,255,0.55)',
+                                    fontFamily: 'var(--font-display)',
+                                    borderColor: 'rgba(255,255,255,0.05)',
+                                    transitionDelay: `${i * 30}ms`,
+                                }}
+                                onMouseEnter={e => (e.currentTarget.style.color = '#F5F3FF')}
+                                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,255,0.55)')}
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                {link.label}
+                            </a>
+                        ))}
+                    </nav>
+
+                    <div className="mb-6">
+                        <LanguageSwitcher />
+                    </div>
+
                     <a
                         href="https://t.me/nodexcc"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-white font-semibold rounded-xl mt-4"
+                        className="btn-primary w-full justify-center"
+                        onClick={() => setMenuOpen(false)}
                     >
-                        📢 {t('telegram')}
+                        {t('telegram')}
                     </a>
+
+                    <div
+                        className="mt-auto text-[11px] font-mono"
+                        style={{ color: 'rgba(82,80,95,0.6)', letterSpacing: '0.1em' }}
+                    >
+                        NODEX © {new Date().getFullYear()}
+                    </div>
                 </div>
-            )}
-        </header>
+            </div>
+        </>
     );
 }

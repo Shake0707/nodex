@@ -5,7 +5,7 @@ import { EventsModule } from '../events/events.module';
 import { PartnersModule } from '../partners/partners.module';
 
 @Module({
-    imports: [MembersModule, EventsModule, PartnersModule],
-    controllers: [StatsController],
+  imports: [MembersModule, EventsModule, PartnersModule],
+  controllers: [StatsController],
 })
-export class StatsModule { }
+export class StatsModule {}

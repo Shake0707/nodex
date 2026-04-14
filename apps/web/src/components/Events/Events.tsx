@@ -15,99 +15,236 @@ interface EventsProps {
 export default function Events({ events, locale }: EventsProps) {
     const t = useTranslations('events');
 
-    return (
-        <section id="events" className="py-16 md:py-24 bg-bg-alt relative overflow-hidden">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent" />
-            <div className="absolute bottom-32 left-[-60px] w-80 h-80 bg-purple-500/4 rounded-full blur-3xl" />
-            <div className="absolute top-32 right-[-60px] w-64 h-64 bg-primary/4 rounded-full blur-3xl" />
+    const featured = events[0];
+    const rest = events.slice(1, 4);
 
-            <div className="max-w-[1200px] mx-auto px-4 md:px-6 relative">
+    return (
+        <section
+            id="events"
+            className="py-24 md:py-32 relative overflow-hidden section-separator"
+            style={{ background: 'var(--color-bg-alt)' }}
+        >
+            {/* Cyan ambient — top right */}
+            <div
+                className="absolute pointer-events-none"
+                style={{
+                    width: 400, height: 400,
+                    background: 'radial-gradient(circle, rgba(0,212,255,0.04) 0%, transparent 70%)',
+                    top: '-60px', right: '-60px',
+                    filter: 'blur(50px)',
+                }}
+            />
+
+            <div className="max-w-[1180px] mx-auto px-5 md:px-8 relative">
+
                 <FadeIn>
-                    <span className="block text-center font-mono text-sm font-medium text-primary uppercase tracking-[2px] mb-3">{t('label')}</span>
-                    <h2 className="text-center text-2xl md:text-3xl font-bold mb-4">{t('title')}</h2>
-                    <p className="text-center text-text-muted text-base md:text-lg max-w-[600px] mx-auto mb-12 md:mb-16">{t('subtitle')}</p>
+                    <div className="flex items-end justify-between mb-14 flex-wrap gap-4">
+                        <div>
+                            <span className="section-label mb-3">{t('label')}</span>
+                            <h2
+                                className="text-4xl md:text-5xl font-black leading-tight"
+                                style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
+                            >
+                                {t('title')}
+                            </h2>
+                        </div>
+                        {events.length > 0 && (
+                            <Link
+                                href={`/${locale}/events`}
+                                className="text-sm font-mono tracking-wider transition-colors duration-200"
+                                style={{ color: 'rgba(245,243,255,0.3)', letterSpacing: '0.1em' }}
+                                onMouseEnter={e => (e.currentTarget.style.color = '#00D4FF')}
+                                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,255,0.3)')}
+                            >
+                                {t('showAll')} →
+                            </Link>
+                        )}
+                    </div>
                 </FadeIn>
 
                 {events.length > 0 ? (
-                    <>
-                        <motion.div
-                            className="grid grid-cols-1 md:grid-cols-2 gap-7"
-                            variants={staggerContainer}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, margin: '-80px' }}
-                        >
-                            {events.slice(0, 4).map((event) => {
-                                const eventImage = getUploadUrl(event.preview_image_url) || getUploadUrl(event.image_url);
-                                const eventDate = new Date(event.event_date);
-
-                                return (
-                                    <motion.div
-                                        key={event.id}
-                                        variants={staggerItem}
-                                        whileHover={{ y: -8, transition: { duration: 0.25 } }}
-                                        className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 transition-shadow hover:shadow-xl hover:border-primary/15 relative"
-                                    >
-                                        <Link href={`/${locale}/events/${event.id}`} className="block">
-                                            <div className="w-full h-48 md:h-52 bg-linear-to-br from-bg-dark to-primary-dark flex items-center justify-center text-5xl text-cyber-glow overflow-hidden relative">
-                                                {eventImage ? (
-                                                    <motion.img
-                                                        src={eventImage}
-                                                        alt={getLocalizedField(event, 'title', locale)}
-                                                        className="w-full h-full object-cover"
-                                                        whileHover={{ scale: 1.05 }}
-                                                        transition={{ duration: 0.4 }}
-                                                    />
-                                                ) : (
-                                                    <>
-                                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(0,102,255,0.2),transparent_60%)]" />
-                                                        🏁
-                                                    </>
-                                                )}
-                                                {/* Date badge */}
-                                                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
-                                                    <div className="text-xs font-bold text-primary leading-none">
-                                                        {eventDate.getDate()}
-                                                    </div>
-                                                    <div className="text-[10px] font-medium text-text-muted uppercase">
-                                                        {(MONTH_NAMES[locale] || MONTH_NAMES.uz)[eventDate.getMonth()]?.slice(0, 3)}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="p-6">
-                                                <div className="flex gap-4 mb-3 flex-wrap">
-                                                    <span className="flex items-center gap-1.5 text-xs text-text-muted font-mono bg-bg-alt px-2 py-1 rounded-md">📅 {formatDate(event.event_date, locale)}</span>
-                                                    <span className="flex items-center gap-1.5 text-xs text-text-muted font-mono bg-bg-alt px-2 py-1 rounded-md">📍 {event.location}</span>
-                                                </div>
-                                                <h3 className="text-lg font-bold mb-2">{getLocalizedField(event, 'title', locale)}</h3>
-                                                <p className="text-sm text-text-muted leading-relaxed line-clamp-2">
-                                                    {stripHtml(getLocalizedField(event, 'description', locale))}
-                                                </p>
-                                            </div>
-                                        </Link>
-                                        {/* Bottom accent */}
-                                        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-500" />
-                                    </motion.div>
-                                );
-                            })}
-                        </motion.div>
-
-                        {/* Show all button */}
-                        <FadeIn>
-                            <div className="text-center mt-10">
-                                <Link
-                                    href={`/${locale}/events`}
-                                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(0,102,255,0.3)] transition-all"
+                    <div className="space-y-4">
+                        {/* Featured event — large */}
+                        {featured && (
+                            <FadeIn>
+                                <motion.div
+                                    whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                                    className="card-neo-cyan overflow-hidden group"
                                 >
-                                    {t('showAll')} →
-                                </Link>
-                            </div>
-                        </FadeIn>
-                    </>
+                                    <Link href={`/${locale}/events/${featured.id}`} className="flex flex-col md:flex-row">
+                                        {/* Image */}
+                                        <div
+                                            className="w-full md:w-2/5 h-56 md:h-auto relative overflow-hidden shrink-0"
+                                            style={{ minHeight: '240px', background: 'var(--color-surface-2)' }}
+                                        >
+                                            {(getUploadUrl(featured.preview_image_url) || getUploadUrl(featured.image_url)) ? (
+                                                <img
+                                                    src={(getUploadUrl(featured.preview_image_url) || getUploadUrl(featured.image_url))!}
+                                                    alt={getLocalizedField(featured, 'title', locale)}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                />
+                                            ) : (
+                                                <div
+                                                    className="absolute inset-0"
+                                                    style={{ background: 'linear-gradient(135deg, rgba(0,212,255,0.08), rgba(168,85,247,0.05))' }}
+                                                />
+                                            )}
+                                            <div
+                                                className="absolute inset-0 pointer-events-none"
+                                                style={{ background: 'linear-gradient(to right, transparent 60%, rgba(14,14,24,0.6))' }}
+                                            />
+
+                                            {/* Date badge */}
+                                            <div
+                                                className="absolute top-4 left-4 px-3 py-2 text-center"
+                                                style={{
+                                                    background: 'rgba(4,4,8,0.85)',
+                                                    border: '1px solid rgba(0,212,255,0.3)',
+                                                    backdropFilter: 'blur(12px)',
+                                                }}
+                                            >
+                                                <div
+                                                    className="text-xl font-black leading-none"
+                                                    style={{ fontFamily: 'var(--font-display)', color: '#00D4FF' }}
+                                                >
+                                                    {new Date(featured.event_date).getDate()}
+                                                </div>
+                                                <div
+                                                    className="text-[9px] font-mono uppercase tracking-wider mt-0.5"
+                                                    style={{ color: 'rgba(0,212,255,0.5)' }}
+                                                >
+                                                    {(MONTH_NAMES[locale] || MONTH_NAMES.uz)[new Date(featured.event_date).getMonth()]?.slice(0, 3)}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Body */}
+                                        <div className="flex-1 p-7 flex flex-col justify-center">
+                                            <div className="flex gap-2 mb-4 flex-wrap">
+                                                <span className="tag-cyber">📅 {formatDate(featured.event_date, locale)}</span>
+                                                <span className="tag-cyber">📍 {featured.location}</span>
+                                            </div>
+                                            <h3
+                                                className="text-xl md:text-2xl font-black mb-3 leading-snug group-hover:text-gradient-cyan transition-all"
+                                                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text)' }}
+                                            >
+                                                {getLocalizedField(featured, 'title', locale)}
+                                            </h3>
+                                            <p
+                                                className="text-sm leading-relaxed line-clamp-3"
+                                                style={{ color: 'rgba(245,243,255,0.4)' }}
+                                            >
+                                                {stripHtml(getLocalizedField(featured, 'description', locale))}
+                                            </p>
+                                            <div className="mt-5">
+                                                <span
+                                                    className="text-[12px] font-mono tracking-wider"
+                                                    style={{ color: '#00D4FF' }}
+                                                >
+                                                    {t('showAll')} →
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </motion.div>
+                            </FadeIn>
+                        )}
+
+                        {/* Rest: compact grid */}
+                        {rest.length > 0 && (
+                            <motion.div
+                                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+                                variants={staggerContainer}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: '-40px' }}
+                            >
+                                {rest.map((event) => {
+                                    const eventDate = new Date(event.event_date);
+                                    const monthNames = MONTH_NAMES[locale] || MONTH_NAMES.uz;
+                                    const eventImage = getUploadUrl(event.preview_image_url) || getUploadUrl(event.image_url);
+
+                                    return (
+                                        <motion.div
+                                            key={event.id}
+                                            variants={staggerItem}
+                                            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                                            className="card-neo overflow-hidden group"
+                                        >
+                                            <Link href={`/${locale}/events/${event.id}`} className="block">
+                                                {/* Image */}
+                                                <div
+                                                    className="w-full h-40 relative overflow-hidden"
+                                                    style={{ background: 'var(--color-surface-2)' }}
+                                                >
+                                                    {eventImage ? (
+                                                        <img
+                                                            src={eventImage}
+                                                            alt={getLocalizedField(event, 'title', locale)}
+                                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                        />
+                                                    ) : (
+                                                        <div
+                                                            className="absolute inset-0"
+                                                            style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.06), rgba(0,212,255,0.04))' }}
+                                                        />
+                                                    )}
+                                                    <div
+                                                        className="absolute top-3 left-3 px-2 py-1 text-center"
+                                                        style={{
+                                                            background: 'rgba(4,4,8,0.85)',
+                                                            border: '1px solid rgba(168,85,247,0.3)',
+                                                            backdropFilter: 'blur(8px)',
+                                                        }}
+                                                    >
+                                                        <div
+                                                            className="text-base font-black leading-none"
+                                                            style={{ fontFamily: 'var(--font-display)', color: '#A855F7' }}
+                                                        >
+                                                            {eventDate.getDate()}
+                                                        </div>
+                                                        <div
+                                                            className="text-[8px] font-mono uppercase"
+                                                            style={{ color: 'rgba(168,85,247,0.5)' }}
+                                                        >
+                                                            {monthNames[eventDate.getMonth()]?.slice(0, 3)}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Body */}
+                                                <div className="p-4">
+                                                    <div className="mb-2">
+                                                        <span className="tag-cyber" style={{ fontSize: '9px' }}>📍 {event.location}</span>
+                                                    </div>
+                                                    <h3
+                                                        className="text-[15px] font-bold leading-snug mb-1.5"
+                                                        style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text)' }}
+                                                    >
+                                                        {getLocalizedField(event, 'title', locale)}
+                                                    </h3>
+                                                    <p
+                                                        className="text-[12px] leading-relaxed line-clamp-2"
+                                                        style={{ color: 'rgba(245,243,255,0.35)' }}
+                                                    >
+                                                        {stripHtml(getLocalizedField(event, 'description', locale))}
+                                                    </p>
+                                                </div>
+                                            </Link>
+                                        </motion.div>
+                                    );
+                                })}
+                            </motion.div>
+                        )}
+                    </div>
                 ) : (
                     <FadeIn>
-                        <p className="text-center py-16 text-text-muted text-lg">{t('empty')}</p>
+                        <p
+                            className="text-center py-20 text-lg"
+                            style={{ color: 'var(--color-text-muted)' }}
+                        >
+                            {t('empty')}
+                        </p>
                     </FadeIn>
                 )}
             </div>

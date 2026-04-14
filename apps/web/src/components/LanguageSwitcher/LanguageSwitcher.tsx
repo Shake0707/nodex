@@ -21,14 +21,23 @@ export default function LanguageSwitcher() {
     };
 
     return (
-        <div className="flex gap-0.5 rounded-lg bg-bg-alt p-0.5">
+        <div
+            className="flex gap-0"
+            style={{
+                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(255,255,255,0.03)',
+            }}
+        >
             {locales.map((loc) => (
                 <button
                     key={loc.code}
-                    className={`px-2.5 py-1.5 text-xs font-semibold font-mono rounded-md tracking-wide transition-all ${locale === loc.code
-                            ? 'bg-primary text-white shadow-md'
-                            : 'text-text-muted hover:text-primary'
-                        }`}
+                    className="px-3 py-1.5 text-[11px] font-semibold tracking-widest transition-all duration-200"
+                    style={{
+                        fontFamily: 'var(--font-mono)',
+                        background: locale === loc.code ? 'rgba(168,85,247,0.15)' : 'transparent',
+                        color: locale === loc.code ? '#A855F7' : 'rgba(245,243,255,0.3)',
+                        borderRight: '1px solid rgba(255,255,255,0.06)',
+                    }}
                     onClick={() => switchLocale(loc.code)}
                 >
                     {loc.label}
