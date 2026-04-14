@@ -5,37 +5,6 @@
 **Домен:** nodex.uz  
 **Дата:** 19.03.2026
 
----
-
-## 1. Анализ референса (aksa-itschool.uz)
-
-Референсный сайт — лендинг школьной спортивной ассоциации AKSA. Ключевые наблюдения:
-
-````carousel
-![Hero section — крупный заголовок, две CTA-кнопки, чистый белый фон](C:\Users\user\.gemini\antigravity\brain\eb2d89fa-607c-4496-8d34-d717f6bbea81\aksa_homepage_top_1773905705562.png)
-<!-- slide -->
-![About section — описание + 3 feature-карточки с иконками](C:\Users\user\.gemini\antigravity\brain\eb2d89fa-607c-4496-8d34-d717f6bbea81\aksa_homepage_middle1_1773905712064.png)
-<!-- slide -->
-![Team section — карусель карточек с фото, должностью и описанием](C:\Users\user\.gemini\antigravity\brain\eb2d89fa-607c-4496-8d34-d717f6bbea81\aksa_homepage_middle2_1773905718646.png)
-<!-- slide -->
-![Gallery — grid карточек мероприятий с датой и количеством фото](C:\Users\user\.gemini\antigravity\brain\eb2d89fa-607c-4496-8d34-d717f6bbea81\aksa_homepage_bottom1_1773905724921.png)
-<!-- slide -->
-![Footer — соцсети, переключатель языка, копирайт](C:\Users\user\.gemini\antigravity\brain\eb2d89fa-607c-4496-8d34-d717f6bbea81\aksa_homepage_footer_1773905731955.png)
-````
-
-### Что берём из референса
-
-| Элемент | Как в AKSA | Как адаптируем для Nodex |
-|---------|-----------|--------------------------|
-| Навигация | Sticky header, якорные ссылки, язык toggle | То же + 3 языка (uz/en/ru) |
-| Hero | Заголовок + 2 CTA | Добавим кибер-анимацию (matrix rain / glitch effect) |
-| About | Текст + 3 feature-карточки | Статистика клуба (20+ членов, 1+ CTF, 2+ партнёров) из БД |
-| Team | Карусель карточек | Grid/карусель с фото, должностью, описанием из БД |
-| Gallery/Events | Grid карточек мероприятий | Раздел CTF Events с описанием из БД |
-| Partners | Нет | Логотипы + названия из БД |
-| Contact | Нет формы | Ссылка на Telegram бот @nodexccbot |
-| Footer | Соцсети + язык | Соцсети (Telegram) + 3 языка + CTA |
-
 ### Что улучшаем
 
 - **Кибер-стилистика:** глитч-эффекты, неоновые акценты, тёмные/светлые паттерны
@@ -138,7 +107,6 @@ nodex/
 | TypeScript | 5.x | Типизация |
 | next-intl | latest | i18n (uz, en, ru) |
 | Framer Motion | latest | Анимации (glitch, fade-in, parallax) |
-| Lucide React | latest | Иконки |
 | Swiper | latest | Карусели (Team, Events) |
 
 ### Backend (apps/api)
@@ -276,39 +244,6 @@ erDiagram
 - Ссылки: Telegram, соцсети
 - Переключатель языка
 - Copyright
-
----
-
-## 6. Дизайн-система
-
-### Цветовая палитра
-
-| Токен | Значение | Использование |
-|-------|----------|---------------|
-| `--primary` | `#0066FF` | Кнопки, ссылки, акценты |
-| `--primary-dark` | `#0044CC` | Hover-состояния |
-| `--primary-light` | `#E6F0FF` | Фоны карточек, секций |
-| `--bg` | `#FFFFFF` | Основной фон |
-| `--bg-alt` | `#F5F7FA` | Чередующийся фон секций |
-| `--text` | `#1A1A2E` | Основной текст |
-| `--text-muted` | `#6B7280` | Вторичный текст |
-| `--cyber-glow` | `#00D4FF` | Неоновые акценты (анимации) |
-| `--danger` | `#EF4444` | Ошибки |
-| `--success` | `#22C55E` | Успех |
-
-### Типографика
-
-- **Заголовки:** Inter или Space Grotesk (tech-feel)
-- **Тело текста:** Inter
-- **Моноширинный (code-стиль):** JetBrains Mono
-
-### Анимации
-
-- **Entry-анимации:** fade-up при скролле (Framer Motion + Intersection Observer)
-- **Hero:** Matrix rain или particle effect (canvas / CSS)
-- **Счётчики:** count-up анимация при видимости
-- **Hover:** scale + shadow на карточках
-- **Smooth scroll** по якорям
 
 ---
 

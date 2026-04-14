@@ -2,43 +2,150 @@
 
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { FadeIn, SlideIn } from '@/components/animations';
+import { FadeIn } from '@/components/animations';
 
 export default function Footer() {
     const t = useTranslations('footer');
     const th = useTranslations('header');
 
+    const navLinks = [
+        { label: th('home'), href: '#hero' },
+        { label: th('about'), href: '#about' },
+        { label: th('team'), href: '#team' },
+        { label: th('events'), href: '#events' },
+        { label: th('partners'), href: '#partners' },
+    ];
+
+    const socialLinks = [
+        { label: 'Telegram', href: 'https://t.me/nodexcc', external: true },
+        { label: 'GitHub', href: 'https://github.com/Shake0707', external: true },
+    ];
+
     return (
-        <footer className="bg-bg-dark-alt py-12">
-            <div className="max-w-[1200px] mx-auto px-4 md:px-6">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-10">
-                    <SlideIn from="left">
-                        <div>
-                            <div className="flex items-center gap-3 mb-3">
-                                <Image src="/logo.png" alt="Nodex" width={36} height={36} className="w-9 h-9 rounded-lg object-cover" />
-                                <span className="text-lg font-bold text-white tracking-tight">NODEX</span>
-                            </div>
-                            <p className="text-text-on-dark opacity-60 text-sm max-w-[300px]">{t('desc')}</p>
-                        </div>
-                    </SlideIn>
+        <footer
+            className="relative overflow-hidden"
+            style={{
+                background: '#020206',
+                borderTop: '1px solid rgba(255,255,255,0.06)',
+            }}
+        >
+            {/* Subtle pink bloom top-left */}
+            <div
+                className="absolute top-0 left-0 pointer-events-none"
+                style={{
+                    width: 300, height: 200,
+                    background: 'radial-gradient(ellipse, rgba(168,85,247,0.04) 0%, transparent 70%)',
+                    filter: 'blur(30px)',
+                }}
+            />
 
-                    <SlideIn from="right">
-                        <div className="flex flex-wrap gap-6">
-                            <a href="#hero" className="text-sm text-text-on-dark opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200">{th('home')}</a>
-                            <a href="#about" className="text-sm text-text-on-dark opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200">{th('about')}</a>
-                            <a href="#team" className="text-sm text-text-on-dark opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200">{th('team')}</a>
-                            <a href="#events" className="text-sm text-text-on-dark opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200">{th('events')}</a>
-                            <a href="https://t.me/nodexcc" target="_blank" rel="noopener noreferrer" className="text-sm text-text-on-dark opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200">{th('telegram')}</a>
-                        </div>
-                    </SlideIn>
-                </div>
-
+            <div className="max-w-[1180px] mx-auto px-5 md:px-8 py-12">
                 <FadeIn>
-                    <div className="border-t border-white/10 pt-6 text-center text-sm text-text-on-dark opacity-40">
-                        <p>© {new Date().getFullYear()} {t('copyright')}</p>
-                        <p className="mt-2 text-xs">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+
+                        {/* Brand */}
+                        <div>
+                            <div className="flex items-center gap-2.5 mb-4">
+                                <div className="w-7 h-7 overflow-hidden rounded">
+                                    <Image
+                                        src="/logo.png"
+                                        alt="Nodex"
+                                        width={28}
+                                        height={28}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <span
+                                    className="text-sm font-black tracking-widest text-white"
+                                    style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.15em' }}
+                                >
+                                    NODEX
+                                </span>
+                            </div>
+                            <p
+                                className="text-[13px] leading-relaxed max-w-[220px]"
+                                style={{ color: 'rgba(245,243,255,0.25)' }}
+                            >
+                                {t('desc')}
+                            </p>
+                        </div>
+
+                        {/* Nav */}
+                        <div>
+                            <p
+                                className="text-[10px] font-mono tracking-widest uppercase mb-4"
+                                style={{ color: 'rgba(245,243,255,0.2)' }}
+                            >
+                                Navigation
+                            </p>
+                            <div className="flex flex-col gap-2.5">
+                                {navLinks.map(link => (
+                                    <a
+                                        key={link.href}
+                                        href={link.href}
+                                        className="text-[13px] transition-colors duration-200"
+                                        style={{ color: 'rgba(245,243,255,0.3)', fontFamily: 'var(--font-sans)' }}
+                                        onMouseEnter={e => (e.currentTarget.style.color = '#F5F3FF')}
+                                        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,255,0.3)')}
+                                    >
+                                        {link.label}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Social */}
+                        <div>
+                            <p
+                                className="text-[10px] font-mono tracking-widest uppercase mb-4"
+                                style={{ color: 'rgba(245,243,255,0.2)' }}
+                            >
+                                Community
+                            </p>
+                            <div className="flex flex-col gap-2.5">
+                                {socialLinks.map(link => (
+                                    <a
+                                        key={link.href}
+                                        href={link.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-[13px] transition-colors duration-200"
+                                        style={{ color: 'rgba(245,243,255,0.3)' }}
+                                        onMouseEnter={e => (e.currentTarget.style.color = '#A855F7')}
+                                        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,255,0.3)')}
+                                    >
+                                        {link.label} ↗
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bottom row */}
+                    <div
+                        className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3"
+                        style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+                    >
+                        <p
+                            className="text-[11px] font-mono tracking-wider"
+                            style={{ color: 'rgba(245,243,255,0.15)' }}
+                        >
+                            © {new Date().getFullYear()} {t('copyright')}
+                        </p>
+                        <p
+                            className="text-[11px] font-mono"
+                            style={{ color: 'rgba(245,243,255,0.12)' }}
+                        >
                             Developed by{' '}
-                            <a href="https://github.com/Shake0707" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-cyber-glow transition-colors opacity-70 hover:opacity-100">
+                            <a
+                                href="https://github.com/Shake0707"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="transition-colors duration-200"
+                                style={{ color: 'rgba(168,85,247,0.5)' }}
+                                onMouseEnter={e => (e.currentTarget.style.color = '#A855F7')}
+                                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(168,85,247,0.5)')}
+                            >
                                 Shakhriyor
                             </a>
                         </p>

@@ -37,7 +37,7 @@ function AuthGuard({ children }: { children: ReactNode }) {
     }
 
     return (
-        <div className="flex min-h-screen bg-gray-50">
+        <div className="flex min-h-screen bg-gray-50 text-[#1a1a2e]">
             <AdminSidebar />
             <main className="flex-1 ml-60 p-8 max-md:ml-0 max-md:p-4">{children}</main>
         </div>

@@ -15,7 +15,7 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-bg-dark">
-            <div className="bg-white rounded-2xl p-10 w-full max-w-[400px] shadow-2xl">
+            <div className="bg-white rounded-2xl p-10 w-full max-w-[400px] shadow-2xl text-[#1a1a2e]">
                 <h1 className="text-2xl font-extrabold text-center mb-2 text-[#1a1a2e]">⚡ Nodex Admin</h1>
                 <p className="text-center text-text-muted mb-8">Tizimga kirish</p>
 

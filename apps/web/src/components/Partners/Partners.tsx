@@ -1,68 +1,122 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { FadeIn, staggerContainer, staggerItem } from '@/components/animations';
+import { FadeIn } from '@/components/animations';
 import { getUploadUrl, type Partner } from '@/lib/api';
 
 interface PartnersProps {
     partners: Partner[];
 }
 
+function PartnerCard({ partner }: { partner: Partner }) {
+    const logo = getUploadUrl(partner.logo_image_url);
+
+    const inner = (
+        <div className="partner-card shrink-0 mx-4">
+            <div className="partner-card__inner">
+                {logo ? (
+                    <img
+                        src={logo}
+                        alt={partner.name}
+                        className="partner-card__logo"
+                    />
+                ) : (
+                    <span className="partner-card__placeholder">{partner.name.slice(0, 2).toUpperCase()}</span>
+                )}
+                <span className="partner-card__name">{partner.name}</span>
+            </div>
+        </div>
+    );
+
+    if (partner.website_url) {
+        return (
+            <a
+                href={partner.website_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contents"
+            >
+                {inner}
+            </a>
+        );
+    }
+    return inner;
+}
+
 export default function Partners({ partners }: PartnersProps) {
     const t = useTranslations('partners');
 
+    // Need at least enough items to fill the viewport — repeat to ensure seamless loop
+    const copies = partners.length < 4 ? 6 : 3;
+    const track = Array.from({ length: copies }, () => partners).flat();
+
     return (
-        <section id="partners" className="py-16 md:py-24 relative overflow-hidden">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent" />
-            <div className="absolute bottom-20 left-[-80px] w-64 h-64 bg-primary/[0.03] rounded-full blur-3xl" />
+        <section
+            id="partners"
+            className="py-24 md:py-32 relative overflow-hidden section-separator"
+            style={{ background: 'var(--color-bg)' }}
+        >
+            {/* Ambient glow */}
+            <div
+                className="absolute pointer-events-none"
+                style={{
+                    width: 500, height: 500,
+                    background: 'radial-gradient(circle, rgba(168,85,247,0.05) 0%, transparent 65%)',
+                    bottom: '-80px', left: '-80px',
+                    filter: 'blur(60px)',
+                }}
+            />
 
-            <div className="max-w-[1200px] mx-auto px-4 md:px-6 relative">
+            <div className="max-w-[1180px] mx-auto px-5 md:px-8 relative mb-16">
                 <FadeIn>
-                    <span className="block text-center font-mono text-sm font-medium text-primary uppercase tracking-[2px] mb-3">{t('label')}</span>
-                    <h2 className="text-center text-2xl md:text-3xl font-bold mb-4">{t('title')}</h2>
-                    <p className="text-center text-text-muted text-base md:text-lg max-w-[600px] mx-auto mb-12 md:mb-16">{t('subtitle')}</p>
-                </FadeIn>
-
-                <motion.div
-                    className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center"
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: '-60px' }}
-                >
-                    {partners.length > 0 ? (
-                        partners.map((partner) => (
-                            <motion.a
-                                key={partner.id}
-                                href={partner.website_url || '#'}
-                                target={partner.website_url ? '_blank' : undefined}
-                                rel="noopener noreferrer"
-                                variants={staggerItem}
-                                whileHover={{ y: -5, scale: 1.03, transition: { duration: 0.2 } }}
-                                className="group flex flex-col items-center gap-4 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm transition-shadow hover:shadow-xl hover:border-primary/15 w-full relative overflow-hidden"
+                    <div className="flex items-end justify-between flex-wrap gap-4">
+                        <div>
+                            <span className="section-label mb-3">{t('label')}</span>
+                            <h2
+                                className="text-4xl md:text-5xl font-black leading-tight"
+                                style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
                             >
-                                <div className="absolute inset-0 bg-linear-to-br from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <motion.div
-                                    className="w-20 h-20 rounded-xl bg-bg-alt flex items-center justify-center text-4xl overflow-hidden relative"
-                                    whileHover={{ rotate: [0, -5, 5, 0], transition: { duration: 0.3 } }}
-                                >
-                                    {getUploadUrl(partner.logo_image_url) ? (
-                                        <img src={getUploadUrl(partner.logo_image_url)!} alt={partner.name} className="w-full h-full object-contain p-2" />
-                                    ) : '🏢'}
-                                </motion.div>
-                                <span className="text-sm font-semibold text-text text-center relative">{partner.name}</span>
-                                {partner.website_url && (
-                                    <span className="text-[10px] text-text-muted font-mono opacity-0 group-hover:opacity-100 transition-opacity">↗ visit</span>
-                                )}
-                            </motion.a>
-                        ))
-                    ) : (
-                        <p className="col-span-full text-center py-16 text-text-muted text-lg">{t('empty')}</p>
-                    )}
-                </motion.div>
+                                {t('title')}
+                            </h2>
+                        </div>
+                        <p
+                            className="text-sm max-w-xs leading-relaxed"
+                            style={{ color: 'rgba(245,243,255,0.35)' }}
+                        >
+                            {t('subtitle')}
+                        </p>
+                    </div>
+                </FadeIn>
             </div>
+
+            {partners.length > 0 ? (
+                /* Edge-fade mask wrapper */
+                <div
+                    style={{
+                        maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <div
+                        className="flex flex-nowrap marquee-track-left"
+                        style={{ width: 'max-content' }}
+                    >
+                        {track.map((partner, i) => (
+                            <PartnerCard key={i} partner={partner} />
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <div className="max-w-[1180px] mx-auto px-5 md:px-8">
+                    <p
+                        className="text-center py-20 text-lg"
+                        style={{ color: 'var(--color-text-muted)' }}
+                    >
+                        {t('empty')}
+                    </p>
+                </div>
+            )}
         </section>
     );
 }

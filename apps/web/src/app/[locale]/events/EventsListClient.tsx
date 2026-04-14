@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { searchEvents } from '@/lib/admin-api';
@@ -20,16 +21,16 @@ interface Props {
 
 function SkeletonCard() {
     return (
-        <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm animate-pulse">
-            <div className="h-48 bg-gray-200" />
+        <div className="card-neo overflow-hidden animate-pulse">
+            <div className="h-48" style={{ background: 'var(--color-surface-2)' }} />
             <div className="p-5 space-y-3">
                 <div className="flex gap-2">
-                    <div className="h-6 w-24 bg-gray-200 rounded-md" />
-                    <div className="h-6 w-20 bg-gray-200 rounded-md" />
+                    <div className="h-5 w-20 rounded" style={{ background: 'var(--color-surface-2)' }} />
+                    <div className="h-5 w-16 rounded" style={{ background: 'var(--color-surface-2)' }} />
                 </div>
-                <div className="h-5 w-3/4 bg-gray-200 rounded" />
-                <div className="h-4 w-full bg-gray-200 rounded" />
-                <div className="h-4 w-2/3 bg-gray-200 rounded" />
+                <div className="h-4 w-3/4 rounded" style={{ background: 'var(--color-surface-2)' }} />
+                <div className="h-3 w-full rounded" style={{ background: 'var(--color-surface-2)' }} />
+                <div className="h-3 w-2/3 rounded" style={{ background: 'var(--color-surface-2)' }} />
             </div>
         </div>
     );
@@ -46,48 +47,78 @@ function EventCard({ event, locale }: EventCardProps) {
     const d = new Date(event.event_date);
     const day = d.getDate();
     const mon = (MONTH_SHORT[locale] || MONTH_SHORT.uz)[d.getMonth()];
-    const year = d.getFullYear();
     const img = getUploadUrl(event.preview_image_url) || getUploadUrl(event.image_url);
 
     return (
-        <Link
-            href={`/${locale}/events/${event.id}`}
-            className="group block bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 transition-all hover:shadow-xl hover:border-primary/15 hover:-translate-y-1"
+        <motion.div
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            className="card-neo overflow-hidden group"
         >
-            <div className="relative h-48 bg-linear-to-br from-bg-dark to-primary-dark flex items-center justify-center text-5xl text-cyber-glow overflow-hidden">
-                {img ? (
-                    <img
-                        src={img}
-                        alt={getLocalizedField(event, 'title', locale)}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                ) : (
-                    <>
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(0,102,255,0.2),transparent_60%)]" />
-                        🏁
-                    </>
-                )}
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-xl px-3 py-1.5 text-center shadow-sm">
-                    <div className="text-lg font-bold text-primary leading-none">{day}</div>
-                    <div className="text-[10px] font-semibold text-text-muted uppercase">{mon} {year}</div>
-                </div>
-            </div>
+            <Link href={`/${locale}/events/${event.id}`} className="block">
+                {/* Image */}
+                <div
+                    className="relative h-48 overflow-hidden"
+                    style={{ background: 'var(--color-surface-2)' }}
+                >
+                    {img ? (
+                        <img
+                            src={img}
+                            alt={getLocalizedField(event, 'title', locale)}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                    ) : (
+                        <div
+                            className="absolute inset-0"
+                            style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.06), rgba(0,212,255,0.04))' }}
+                        />
+                    )}
 
-            <div className="p-5">
-                <h3 className="text-base font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {getLocalizedField(event, 'title', locale)}
-                </h3>
-                <p className="text-sm text-text-muted leading-relaxed line-clamp-2 mb-3">
-                    {stripHtml(getLocalizedField(event, 'description', locale))}
-                </p>
-                {event.location && (
-                    <div className="flex items-center gap-1.5 text-xs text-text-muted">
-                        <span>📍</span>
-                        <span>{event.location}</span>
+                    {/* Date badge */}
+                    <div
+                        className="absolute top-3 left-3 px-2 py-1 text-center"
+                        style={{
+                            background: 'rgba(4,4,8,0.85)',
+                            border: '1px solid rgba(168,85,247,0.3)',
+                            backdropFilter: 'blur(8px)',
+                        }}
+                    >
+                        <div
+                            className="text-base font-black leading-none"
+                            style={{ fontFamily: 'var(--font-display)', color: '#A855F7' }}
+                        >
+                            {day}
+                        </div>
+                        <div
+                            className="text-[8px] font-mono uppercase"
+                            style={{ color: 'rgba(168,85,247,0.5)' }}
+                        >
+                            {mon}
+                        </div>
                     </div>
-                )}
-            </div>
-        </Link>
+                </div>
+
+                {/* Body */}
+                <div className="p-4">
+                    {event.location && (
+                        <div className="mb-2">
+                            <span className="tag-cyber" style={{ fontSize: '9px' }}>📍 {event.location}</span>
+                        </div>
+                    )}
+                    <h3
+                        className="text-[15px] font-bold leading-snug mb-1.5 line-clamp-2"
+                        style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text)' }}
+                    >
+                        {getLocalizedField(event, 'title', locale)}
+                    </h3>
+                    <p
+                        className="text-sm leading-relaxed line-clamp-2"
+                        style={{ color: 'rgba(245,243,255,0.35)' }}
+                    >
+                        {stripHtml(getLocalizedField(event, 'description', locale))}
+                    </p>
+                </div>
+            </Link>
+        </motion.div>
     );
 }
 
@@ -100,12 +131,34 @@ interface PaginationProps {
 }
 
 function Pagination({ page, totalPages, onPageChange }: PaginationProps) {
+    const navBtn = (disabled: boolean): React.CSSProperties => ({
+        background: 'transparent',
+        border: '1px solid rgba(0,212,255,0.3)',
+        color: disabled ? 'rgba(0,212,255,0.2)' : '#00D4FF',
+        fontFamily: 'var(--font-mono)',
+        padding: '8px 14px',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        transition: 'all 0.2s',
+        fontSize: '14px',
+    });
+
+    const pageBtn = (active: boolean): React.CSSProperties => ({
+        background: active ? '#A855F7' : 'var(--color-surface)',
+        border: `1px solid ${active ? '#A855F7' : 'rgba(255,255,255,0.07)'}`,
+        color: active ? '#fff' : 'rgba(245,243,255,0.4)',
+        fontFamily: 'var(--font-mono)',
+        padding: '8px 12px',
+        cursor: 'pointer',
+        transition: 'all 0.2s',
+        fontSize: '13px',
+    });
+
     return (
         <div className="flex items-center justify-center gap-2 mt-10">
             <button
                 onClick={() => onPageChange(page - 1)}
                 disabled={page <= 1}
-                className="px-3 py-2 text-sm font-medium rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                style={navBtn(page <= 1)}
             >
                 ←
             </button>
@@ -114,10 +167,7 @@ function Pagination({ page, totalPages, onPageChange }: PaginationProps) {
                 <button
                     key={p}
                     onClick={() => onPageChange(p)}
-                    className={`px-3.5 py-2 text-sm font-medium rounded-lg border cursor-pointer transition-all ${p === page
-                        ? 'bg-primary text-white border-primary shadow-sm'
-                        : 'bg-white border-gray-200 hover:bg-gray-50 text-text-muted'
-                        }`}
+                    style={pageBtn(p === page)}
                 >
                     {p}
                 </button>
@@ -126,7 +176,7 @@ function Pagination({ page, totalPages, onPageChange }: PaginationProps) {
             <button
                 onClick={() => onPageChange(page + 1)}
                 disabled={page >= totalPages}
-                className="px-3 py-2 text-sm font-medium rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                style={navBtn(page >= totalPages)}
             >
                 →
             </button>
@@ -146,7 +196,6 @@ export default function EventsListClient({ locale }: Props) {
     const limit = 9;
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // ─── TanStack Query ───
     const { data, isFetching } = useQuery({
         queryKey: ['events-search', debouncedSearch, page, sort],
         queryFn: () => searchEvents({
@@ -161,13 +210,10 @@ export default function EventsListClient({ locale }: Props) {
     const total: number = data?.total || 0;
     const totalPages = Math.ceil(total / limit);
 
-    // ─── Handlers ───
-
     const handleSearchChange = (value: string) => {
         setSearch(value);
         if (debounceRef.current) clearTimeout(debounceRef.current);
         if (value.length > 0 && value.length < 3) return;
-
         debounceRef.current = setTimeout(() => {
             setPage(1);
             setDebouncedSearch(value);
@@ -185,31 +231,56 @@ export default function EventsListClient({ locale }: Props) {
     };
 
     return (
-        <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-12 md:py-16">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-8 py-14 md:py-20">
+
             {/* Header */}
-            <div className="text-center mb-10">
-                <span className="block font-mono text-sm font-medium text-primary uppercase tracking-[2px] mb-3">
-                    {t('label')}
-                </span>
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">{t('title')}</h1>
-                <p className="text-text-muted text-base md:text-lg max-w-[600px] mx-auto">{t('subtitle')}</p>
+            <div className="text-center mb-12">
+                <span className="section-label mb-3">{t('label')}</span>
+                <h1
+                    className="text-4xl md:text-5xl font-black mb-4 leading-tight"
+                    style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
+                >
+                    {t('title')}
+                </h1>
+                <p
+                    className="text-base md:text-lg max-w-[600px] mx-auto"
+                    style={{ color: 'rgba(245,243,255,0.35)' }}
+                >
+                    {t('subtitle')}
+                </p>
             </div>
 
             {/* Controls: Search + Sort */}
             <div className="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto mb-10">
                 <div className="relative flex-1">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg opacity-50">🔍</span>
+                    <span
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-mono"
+                        style={{ color: 'rgba(0,212,255,0.4)' }}
+                    >
+                        ⌕
+                    </span>
                     <input
                         type="text"
                         value={search}
                         onChange={(e) => handleSearchChange(e.target.value)}
                         placeholder={t('searchPlaceholder')}
-                        className="w-full pl-12 pr-10 py-3 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(0,102,255,0.08)] transition-all placeholder:text-gray-400"
+                        className="w-full pl-10 pr-10 py-3 text-sm outline-none transition-all"
+                        style={{
+                            background: 'var(--color-surface)',
+                            border: '1px solid rgba(255,255,255,0.07)',
+                            color: 'var(--color-text)',
+                            fontFamily: 'var(--font-mono)',
+                        }}
+                        onFocus={e => (e.currentTarget.style.border = '1px solid rgba(0,212,255,0.4)')}
+                        onBlur={e => (e.currentTarget.style.border = '1px solid rgba(255,255,255,0.07)')}
                     />
                     {search && (
                         <button
                             onClick={() => { setSearch(''); setPage(1); setDebouncedSearch(''); }}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer text-sm"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs cursor-pointer transition-colors"
+                            style={{ color: 'rgba(245,243,255,0.3)', fontFamily: 'var(--font-mono)' }}
+                            onMouseEnter={e => (e.currentTarget.style.color = '#00D4FF')}
+                            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,255,0.3)')}
                         >
                             ✕
                         </button>
@@ -219,7 +290,14 @@ export default function EventsListClient({ locale }: Props) {
                 <select
                     value={sort}
                     onChange={(e) => handleSortChange(e.target.value as SortOption)}
-                    className="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:border-primary cursor-pointer text-text-muted min-w-[180px]"
+                    className="px-4 py-3 outline-none cursor-pointer min-w-[180px]"
+                    style={{
+                        background: 'var(--color-surface)',
+                        border: '1px solid rgba(255,255,255,0.07)',
+                        color: 'rgba(245,243,255,0.5)',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '12px',
+                    }}
                 >
                     <option value="date_desc">{t('sortDateDesc')}</option>
                     <option value="date_asc">{t('sortDateAsc')}</option>
@@ -230,28 +308,38 @@ export default function EventsListClient({ locale }: Props) {
 
             {/* Results count */}
             {!isFetching && (
-                <p className="text-xs text-text-muted mb-6 text-center">
+                <p
+                    className="text-xs mb-6 text-center font-mono"
+                    style={{ color: 'rgba(245,243,255,0.25)' }}
+                >
                     {t('found', { count: total })}
                 </p>
             )}
 
             {/* Grid: Skeleton or Events */}
             {isFetching ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {Array.from({ length: limit }).map((_, i) => (
                         <SkeletonCard key={i} />
                     ))}
                 </div>
             ) : events.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {events.map((event) => (
                         <EventCard key={event.id} event={event} locale={locale} />
                     ))}
                 </div>
             ) : (
-                <div className="text-center py-20">
-                    <div className="text-5xl mb-4">🔍</div>
-                    <p className="text-text-muted text-lg">{search ? t('noResults') : t('empty')}</p>
+                <div className="text-center py-24">
+                    <div
+                        className="text-3xl mb-4 font-mono"
+                        style={{ color: 'rgba(0,212,255,0.2)' }}
+                    >
+                        [ ]
+                    </div>
+                    <p className="text-base" style={{ color: 'var(--color-text-muted)' }}>
+                        {search ? t('noResults') : t('empty')}
+                    </p>
                 </div>
             )}
 

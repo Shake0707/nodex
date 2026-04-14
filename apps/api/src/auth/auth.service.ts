@@ -4,36 +4,36 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-    constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-    async validateUser(username: string, password: string) {
-        const admin = await this.prisma.admin.findUnique({
-            where: { username },
-        });
+  async validateUser(username: string, password: string) {
+    const admin = await this.prisma.admin.findUnique({
+      where: { username },
+    });
 
-        if (!admin) {
-            throw new UnauthorizedException('Noto\'g\'ri login yoki parol');
-        }
-
-        const isPasswordValid = await bcrypt.compare(password, admin.password_hash);
-
-        if (!isPasswordValid) {
-            throw new UnauthorizedException('Noto\'g\'ri login yoki parol');
-        }
-
-        return { id: admin.id, username: admin.username };
+    if (!admin) {
+      throw new UnauthorizedException("Noto'g'ri login yoki parol");
     }
 
-    async getProfile(adminId: number) {
-        const admin = await this.prisma.admin.findUnique({
-            where: { id: adminId },
-            select: { id: true, username: true, created_at: true },
-        });
+    const isPasswordValid = await bcrypt.compare(password, admin.password_hash);
 
-        if (!admin) {
-            throw new UnauthorizedException('Admin topilmadi');
-        }
-
-        return admin;
+    if (!isPasswordValid) {
+      throw new UnauthorizedException("Noto'g'ri login yoki parol");
     }
+
+    return { id: admin.id, username: admin.username };
+  }
+
+  async getProfile(adminId: number) {
+    const admin = await this.prisma.admin.findUnique({
+      where: { id: adminId },
+      select: { id: true, username: true, created_at: true },
+    });
+
+    if (!admin) {
+      throw new UnauthorizedException('Admin topilmadi');
+    }
+
+    return admin;
+  }
 }

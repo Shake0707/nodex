@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -14,10 +15,12 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Security headers (CSP disabled — API serves images to separate frontend)
-  app.use(helmet({
-    contentSecurityPolicy: false,
-    crossOriginResourcePolicy: { policy: 'cross-origin' },
-  }));
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+    }),
+  );
 
   // Global validation — strip unknown properties
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
@@ -34,7 +37,9 @@ async function bootstrap() {
   // Session secret — must be set in production
   const sessionSecret = process.env.SESSION_SECRET;
   if (!sessionSecret && process.env.NODE_ENV === 'production') {
-    throw new Error('SESSION_SECRET environment variable is required in production');
+    throw new Error(
+      'SESSION_SECRET environment variable is required in production',
+    );
   }
 
   // Session middleware
@@ -55,12 +60,15 @@ async function bootstrap() {
   // Serve uploaded files as static (bypass NestJS global prefix)
   const uploadsPath = join(process.cwd(), 'uploads');
   const expressApp = app.getHttpAdapter().getInstance();
-  expressApp.use('/uploads', express.static(uploadsPath, {
-    dotfiles: 'deny',
-    index: false,
-  }));
+  expressApp.use(
+    '/uploads',
+    express.static(uploadsPath, {
+      dotfiles: 'deny',
+      index: false,
+    }),
+  );
 
   const port = process.env.PORT || 4000;
   await app.listen(port);
 }
-bootstrap();
+void bootstrap();

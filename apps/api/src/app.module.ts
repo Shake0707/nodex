@@ -11,10 +11,12 @@ import { StatsModule } from './stats/stats.module';
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot([{
-      ttl: 60000,
-      limit: 30,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 30,
+      },
+    ]),
     PrismaModule,
     AuthModule,
     MembersModule,
@@ -30,4 +32,4 @@ import { StatsModule } from './stats/stats.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

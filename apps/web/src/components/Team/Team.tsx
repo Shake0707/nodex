@@ -18,62 +18,138 @@ export default function Team({ members, locale }: TeamProps) {
     const getDesc = (m: Member) => (m as unknown as Record<string, string>)[`description_${locale}`] || m.description_uz;
 
     return (
-        <section id="team" className="py-16 md:py-24 relative overflow-hidden">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent" />
-            <div className="absolute top-40 right-[-80px] w-64 h-64 bg-primary/[0.04] rounded-full blur-3xl" />
+        <section
+            id="team"
+            className="py-24 md:py-32 relative overflow-hidden section-separator"
+            style={{ background: 'var(--color-bg)' }}
+        >
+            {/* Pink ambient — left */}
+            <div
+                className="absolute pointer-events-none"
+                style={{
+                    width: 400, height: 400,
+                    background: 'radial-gradient(circle, rgba(168,85,247,0.05) 0%, transparent 70%)',
+                    top: '30%', left: '-80px',
+                    filter: 'blur(50px)',
+                }}
+            />
 
-            <div className="max-w-[1200px] mx-auto px-4 md:px-6 relative">
+            <div className="max-w-[1180px] mx-auto px-5 md:px-8 relative">
+
                 <FadeIn>
-                    <span className="block text-center font-mono text-sm font-medium text-primary uppercase tracking-[2px] mb-3">{t('label')}</span>
-                    <h2 className="text-center text-2xl md:text-3xl font-bold mb-4">{t('title')}</h2>
-                    <p className="text-center text-text-muted text-base md:text-lg max-w-[600px] mx-auto mb-12 md:mb-16">{t('subtitle')}</p>
+                    <div className="flex items-end justify-between mb-14 flex-wrap gap-4">
+                        <div>
+                            <span className="section-label mb-3">{t('label')}</span>
+                            <h2
+                                className="text-4xl md:text-5xl font-black leading-tight"
+                                style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
+                            >
+                                {t('title')}
+                            </h2>
+                        </div>
+                        <p
+                            className="text-sm max-w-xs leading-relaxed"
+                            style={{ color: 'rgba(245,243,255,0.35)', fontFamily: 'var(--font-sans)' }}
+                        >
+                            {t('subtitle')}
+                        </p>
+                    </div>
                 </FadeIn>
 
                 {members.length > 0 ? (
                     <motion.div
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                         variants={staggerContainer}
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, margin: '-80px' }}
+                        viewport={{ once: true, margin: '-60px' }}
                     >
-                        {members.map((member) => (
-                            <motion.div
-                                key={member.id}
-                                variants={staggerItem}
-                                whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 transition-shadow hover:shadow-xl hover:border-primary/15"
-                            >
-                                <div className="h-48 bg-linear-to-br from-bg-dark to-primary-dark flex items-center justify-center text-5xl text-cyber-glow overflow-hidden relative">
-                                    {getUploadUrl(member.photo_url) ? (
-                                        <motion.img
-                                            src={getUploadUrl(member.photo_url)!}
-                                            alt={getName(member)}
-                                            className="w-full h-full object-cover"
-                                            whileHover={{ scale: 1.05 }}
-                                            transition={{ duration: 0.4 }}
+                        {members.map((member) => {
+                            const photoUrl = getUploadUrl(member.photo_url);
+                            return (
+                                <motion.div
+                                    key={member.id}
+                                    variants={staggerItem}
+                                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                                    className="card-neo overflow-hidden group cursor-default"
+                                >
+                                    {/* Photo */}
+                                    <div
+                                        className="w-full h-56 relative overflow-hidden"
+                                        style={{ background: 'var(--color-surface-2)' }}
+                                    >
+                                        {photoUrl ? (
+                                            <img
+                                                src={photoUrl}
+                                                alt={getName(member)}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                        ) : (
+                                            <div
+                                                className="absolute inset-0 flex items-center justify-center"
+                                                style={{
+                                                    background: 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(0,212,255,0.06))',
+                                                    fontSize: '48px',
+                                                    opacity: 0.4,
+                                                }}
+                                            >
+                                                ○
+                                            </div>
+                                        )}
+
+                                        {/* Gradient overlay */}
+                                        <div
+                                            className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                                            style={{
+                                                background: 'linear-gradient(135deg, rgba(168,85,247,0.12), transparent 60%)',
+                                            }}
                                         />
-                                    ) : (
-                                        <>
-                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_80%,rgba(0,212,255,0.15),transparent_60%)]" />
-                                            👤
-                                        </>
-                                    )}
-                                    {/* Status dot */}
-                                    <div className="absolute top-3 right-3 w-3 h-3 bg-success rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-lg font-bold mb-1">{getName(member)}</h3>
-                                    <p className="text-sm font-mono text-primary font-medium mb-3">{getRole(member)}</p>
-                                    <p className="text-sm text-text-muted leading-relaxed line-clamp-3">{getDesc(member)}</p>
-                                </div>
-                            </motion.div>
-                        ))}
+
+                                        {/* Status dot */}
+                                        <div
+                                            className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-1"
+                                            style={{
+                                                background: 'rgba(8,8,15,0.8)',
+                                                border: '1px solid rgba(255,255,255,0.07)',
+                                                backdropFilter: 'blur(8px)',
+                                            }}
+                                        >
+                                            <div className="live-dot" style={{ width: '5px', height: '5px' }} />
+                                        </div>
+                                    </div>
+
+                                    {/* Info */}
+                                    <div className="p-5">
+                                        <h3
+                                            className="text-base font-bold mb-1.5"
+                                            style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text)' }}
+                                        >
+                                            {getName(member)}
+                                        </h3>
+                                        <div className="mb-3">
+                                            <span className="tag-cyber" style={{ fontSize: '9px' }}>
+                                                {getRole(member)}
+                                            </span>
+                                        </div>
+                                        <p
+                                            className="text-[13px] leading-relaxed line-clamp-3"
+                                            style={{ color: 'rgba(245,243,255,0.35)' }}
+                                        >
+                                            {getDesc(member)}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
                     </motion.div>
                 ) : (
                     <FadeIn>
-                        <p className="text-center py-16 text-text-muted text-lg">{t('empty')}</p>
+                        <p
+                            className="text-center py-20 text-lg"
+                            style={{ color: 'var(--color-text-muted)' }}
+                        >
+                            {t('empty')}
+                        </p>
                     </FadeIn>
                 )}
             </div>

@@ -1,8 +1,15 @@
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Syne, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin', 'cyrillic'],
+const syne = Syne({
+  variable: '--font-syne',
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
+  display: 'swap',
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: '--font-jakarta',
+  subsets: ['latin'],
   display: 'swap',
 });
 
@@ -21,7 +28,7 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
   return (
-    <html lang={locale || 'uz'} data-scroll-behavior="smooth" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang={locale || 'uz'} data-scroll-behavior="smooth" className={`${syne.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
       <body>{children}</body>
     </html>
   );
