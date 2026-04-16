@@ -25,6 +25,8 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/apps/api/node_modules ./apps/api/node_modules
 COPY --from=build /app/apps/api/package.json ./package.json
 COPY --from=build /app/apps/api/prisma ./prisma
+# prisma/ содержит schema.prisma + seed.ts
+# seed запускается вручную: docker compose exec api ./node_modules/.bin/tsx prisma/seed.ts
 # JS config for prisma CLI (no TypeScript runtime needed in prod)
 COPY apps/api/prisma.config.prod.js ./prisma.config.js
 
@@ -32,4 +34,4 @@ RUN mkdir -p uploads
 
 EXPOSE 4000
 # Run migrations then start the app
-CMD ["sh", "-c", "./apps/api/node_modules/.bin/prisma migrate deploy && node dist/main"]
+CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && node dist/main"]
