@@ -27,6 +27,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
                 type: 'article',
                 ...(img ? { images: [{ url: img, width: 1200, height: 630, alt: title }] } : {}),
             },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description: desc,
+                ...(img ? { images: [img] } : {}),
+            },
         };
     } catch {
         return { title: 'Event' };

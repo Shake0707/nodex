@@ -58,9 +58,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             locale: locale === 'uz' ? 'uz_UZ' : locale === 'ru' ? 'ru_RU' : 'en_US',
             type: 'website',
             images: [{
-                url: `${SITE_URL}/og-image.png`,
-                width: 1200,
-                height: 630,
+                url: `${SITE_URL}/logo.png`,
+                width: 400,
+                height: 400,
                 alt: meta.title,
             }],
         },
