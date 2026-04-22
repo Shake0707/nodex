@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { FadeIn, staggerContainer, staggerItem } from '@/components/animations';
 import { getUploadUrl, type Event } from '@/lib/api';
 import { getLocalizedField, formatDate, MONTH_NAMES, stripHtml } from '@/lib/locale-helpers';
@@ -121,8 +122,8 @@ export default function Events({ events, locale }: EventsProps) {
                                         {/* Body */}
                                         <div className="flex-1 p-7 flex flex-col justify-center">
                                             <div className="flex gap-2 mb-4 flex-wrap">
-                                                <span className="tag-cyber">📅 {formatDate(featured.event_date, locale)}</span>
-                                                <span className="tag-cyber">📍 {featured.location}</span>
+                                                <span className="tag-cyber"><CalendarOutlined style={{ fontSize: 11 }} /> {formatDate(featured.event_date, locale)}</span>
+                                                <span className="tag-cyber"><EnvironmentOutlined style={{ fontSize: 11 }} /> {featured.location}</span>
                                             </div>
                                             <h3
                                                 className="text-xl md:text-2xl font-black mb-3 leading-snug group-hover:text-gradient-cyan transition-all"
@@ -215,7 +216,7 @@ export default function Events({ events, locale }: EventsProps) {
                                                 {/* Body */}
                                                 <div className="p-4">
                                                     <div className="mb-2">
-                                                        <span className="tag-cyber" style={{ fontSize: '9px' }}>📍 {event.location}</span>
+                                                        <span className="tag-cyber" style={{ fontSize: '9px' }}><EnvironmentOutlined style={{ fontSize: 9 }} /> {event.location}</span>
                                                     </div>
                                                     <h3
                                                         className="text-[15px] font-bold leading-snug mb-1.5"

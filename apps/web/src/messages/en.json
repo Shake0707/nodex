@@ -55,7 +55,7 @@
         "label": "// Contact",
         "title": "Get in touch",
         "subtitle": "Questions, suggestions, or partnerships — reach out to us via Telegram. Get quick answers through our Nodex bot.",
-        "btnBot": "@nodexccbot — Bot",
+        "btnBot": "Telegram Bot",
         "btnChannel": "Telegram channel"
     },
     "footer": {

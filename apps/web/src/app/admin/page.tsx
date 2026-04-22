@@ -1,5 +1,6 @@
 'use client';
 
+import { TeamOutlined, TrophyOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { useMembers } from '@/hooks/useMembers';
 import { useEvents } from '@/hooks/useEvents';
 import { usePartners } from '@/hooks/usePartners';
@@ -14,9 +15,9 @@ export default function DashboardPage() {
     const partners = Array.isArray(partnersData) ? partnersData : [];
 
     const stats = [
-        { value: members.length, label: '👥 Members', color: 'text-blue-500' },
-        { value: events.length, label: '🏆 Events', color: 'text-green-500' },
-        { value: partners.length, label: '🤝 Partners', color: 'text-purple-500' },
+        { value: members.length, label: 'Members', icon: <TeamOutlined />, color: 'text-blue-500' },
+        { value: events.length, label: 'Events', icon: <TrophyOutlined />, color: 'text-green-500' },
+        { value: partners.length, label: 'Partners', icon: <UsergroupAddOutlined />, color: 'text-purple-500' },
     ];
 
     return (
@@ -27,7 +28,7 @@ export default function DashboardPage() {
                 {stats.map((s, i) => (
                     <div key={i} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                         <div className={`text-3xl font-extrabold ${s.color}`}>{s.value}</div>
-                        <div className="text-sm text-gray-500 mt-1">{s.label}</div>
+                        <div className="text-sm text-gray-500 mt-1 flex items-center gap-1.5">{s.icon} {s.label}</div>
                     </div>
                 ))}
             </div>

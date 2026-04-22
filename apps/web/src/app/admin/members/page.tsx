@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { UserOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useMembers, useCreateMember, useUpdateMember, useDeleteMember } from '@/hooks/useMembers';
 import AdminModal from '@/components/admin/AdminModal';
 import ImageUploader from '@/components/admin/ImageUploader';
@@ -88,15 +89,15 @@ export default function MembersPage() {
                                         <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex items-center justify-center text-lg">
                                             {getImgUrl(m.photo_url) ? (
                                                 <img src={getImgUrl(m.photo_url)!} alt={m.name_uz} className="w-full h-full object-cover" />
-                                            ) : '👤'}
+                                            ) : <UserOutlined style={{ fontSize: 18, color: '#9ca3af' }} />}
                                         </div>
                                     </td>
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">{m.name_uz}</td>
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">{m.role_uz}</td>
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">
                                         <div className="flex gap-2">
-                                            <button className="px-2.5 py-1.5 bg-primary text-white text-xs font-semibold rounded-md cursor-pointer" onClick={() => openEdit(m)}>✏️</button>
-                                            <button className="px-2.5 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-md cursor-pointer hover:bg-red-100" onClick={() => handleDelete(m.id)}>🗑</button>
+                                            <button className="px-2.5 py-1.5 bg-primary text-white text-xs font-semibold rounded-md cursor-pointer flex items-center" onClick={() => openEdit(m)}><EditOutlined /></button>
+                                            <button className="px-2.5 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-md cursor-pointer hover:bg-red-100 flex items-center" onClick={() => handleDelete(m.id)}><DeleteOutlined /></button>
                                         </div>
                                     </td>
                                 </tr>

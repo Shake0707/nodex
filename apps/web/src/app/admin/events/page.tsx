@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { FlagOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useEvents, useDeleteEvent } from '@/hooks/useEvents';
 
 interface EventRow {
@@ -59,7 +60,7 @@ export default function EventsPage() {
                                         <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex items-center justify-center text-lg">
                                             {getImgUrl(ev.preview_image_url) ? (
                                                 <img src={getImgUrl(ev.preview_image_url)!} alt={ev.title_uz} className="w-full h-full object-cover" />
-                                            ) : '🏁'}
+                                            ) : <FlagOutlined style={{ fontSize: 18, color: '#9ca3af' }} />}
                                         </div>
                                     </td>
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50 font-medium">{ev.title_uz}</td>
@@ -67,8 +68,8 @@ export default function EventsPage() {
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">{ev.location}</td>
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">
                                         <div className="flex gap-2">
-                                            <Link href={`/admin/events/${ev.id}/edit`} className="px-2.5 py-1.5 bg-primary text-white text-xs font-semibold rounded-md">✏️</Link>
-                                            <button className="px-2.5 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-md cursor-pointer hover:bg-red-100" onClick={() => handleDelete(ev.id)}>🗑</button>
+                                            <Link href={`/admin/events/${ev.id}/edit`} className="px-2.5 py-1.5 bg-primary text-white text-xs font-semibold rounded-md flex items-center"><EditOutlined /></Link>
+                                            <button className="px-2.5 py-1.5 bg-red-50 text-red-500 text-xs font-semibold rounded-md cursor-pointer hover:bg-red-100 flex items-center" onClick={() => handleDelete(ev.id)}><DeleteOutlined /></button>
                                         </div>
                                     </td>
                                 </tr>

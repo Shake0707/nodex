@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { ThunderboltOutlined } from '@ant-design/icons';
 import { useLogin } from '@/hooks/useAuth';
 
 export default function LoginPage() {
@@ -16,7 +17,7 @@ export default function LoginPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-bg-dark">
             <div className="bg-white rounded-2xl p-10 w-full max-w-[400px] shadow-2xl text-[#1a1a2e]">
-                <h1 className="text-2xl font-extrabold text-center mb-2 text-[#1a1a2e]">⚡ Nodex Admin</h1>
+                <h1 className="text-2xl font-extrabold text-center mb-2 text-[#1a1a2e] flex items-center justify-center gap-2"><ThunderboltOutlined style={{ color: '#A855F7' }} /> Nodex Admin</h1>
                 <p className="text-center text-text-muted mb-8">Tizimga kirish</p>
 
                 {login.isError && (

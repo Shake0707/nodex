@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { InboxOutlined, CameraOutlined, ReloadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { uploadFile } from '@/lib/admin-api';
 
 interface ImageUploaderProps {
@@ -84,14 +85,14 @@ export default function ImageUploader({ value, onChange, label = 'Rasm' }: Image
                                 className="px-3 py-1.5 bg-white text-xs font-semibold rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
                                 onClick={() => inputRef.current?.click()}
                             >
-                                🔄 Almashtirish
+                                <ReloadOutlined /> Almashtirish
                             </button>
                             <button
                                 type="button"
                                 className="px-3 py-1.5 bg-red-500 text-white text-xs font-semibold rounded-lg hover:bg-red-600 transition-colors cursor-pointer"
                                 onClick={() => { onChange(''); setLocalPreview(null); }}
                             >
-                                🗑 O&apos;chirish
+                                <DeleteOutlined /> O&apos;chirish
                             </button>
                         </div>
                     )}
@@ -110,7 +111,7 @@ export default function ImageUploader({ value, onChange, label = 'Rasm' }: Image
                     onDragLeave={() => setDragOver(false)}
                     onDrop={handleDrop}
                 >
-                    <div className="text-3xl">{dragOver ? '📥' : '📷'}</div>
+                    <div className="text-3xl">{dragOver ? <InboxOutlined /> : <CameraOutlined />}</div>
                     <p className="text-xs text-text-muted text-center px-4">
                         <span className="text-primary font-semibold">Bosing</span> yoki rasmni shu yerga tashlang
                     </p>

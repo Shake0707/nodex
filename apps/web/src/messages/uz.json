@@ -55,7 +55,7 @@
         "label": "// Aloqa",
         "title": "Biz bilan bog'laning",
         "subtitle": "Savol, taklif yoki hamkorlik bo'yicha — Telegram orqali biz bilan bog'laning. Nodex botimiz orqali tezkor javob oling.",
-        "btnBot": "@nodexccbot — Bot",
+        "btnBot": "Telegram — Bot",
         "btnChannel": "Telegram kanal"
     },
     "footer": {
