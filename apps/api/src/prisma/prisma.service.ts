@@ -4,15 +4,10 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
-    const connectionString = process.env.DATABASE_URL;
-    if (!connectionString) {
-      throw new Error('DATABASE_URL environment variable is not set');
-    }
-    super({
-      datasources: {
-        db: { url: connectionString },
-      },
-    });
+    // Prisma 7 reads DATABASE_URL from environment automatically.
+    // Connection URL is configured in prisma.config.prod.js (Docker)
+    // or prisma.config.ts (local dev).
+    super();
   }
 
   async onModuleInit() {
