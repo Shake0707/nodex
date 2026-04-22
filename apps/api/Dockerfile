@@ -38,4 +38,4 @@ RUN ./node_modules/.bin/prisma generate --schema=prisma/schema.prisma
 RUN mkdir -p uploads
 
 EXPOSE 4000
-CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && node dist/main"]
+CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && node dist/src/main"]
