@@ -21,6 +21,8 @@
   --font-display: var(--font-syne, 'Syne'), sans-serif;
   --font-sans:    var(--font-jakarta, 'Plus Jakarta Sans'), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono:    var(--font-jetbrains, 'JetBrains Mono'), 'Fira Code', monospace;
+
+  --breakpoint-md2: 870px;
 }
 
 /* ── Base ── */
