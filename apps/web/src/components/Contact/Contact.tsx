@@ -86,8 +86,8 @@ export default function Contact() {
                         style={{ color: 'rgba(245,243,255,0.15)' }}
                     >
                         {[
-                            { label: '41°17′N 69°15′E', desc: 'Tashkent, UZ' },
-                            { label: 'EST. 2024', desc: 'Founded' },
+                            { label: '41.302704, 69.315786', desc: 'Tashkent, UZ' },
+                            { label: 'EST. 2026', desc: 'Founded' },
                             { label: 'NODEX-CC', desc: 'Handle' },
                         ].map((item, i, arr) => (
                             <div key={i} className="flex items-center gap-8">

@@ -17,8 +17,7 @@ export default function Footer() {
     ];
 
     const socialLinks = [
-        { label: 'Telegram', href: 'https://t.me/nodexcc', external: true },
-        { label: 'GitHub', href: 'https://github.com/Shake0707', external: true },
+        { label: 'Telegram', href: 'https://t.me/nodexcc', external: true }
     ];
 
     return (

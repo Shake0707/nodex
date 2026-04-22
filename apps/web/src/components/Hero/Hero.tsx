@@ -85,7 +85,7 @@ export default function Hero({ stats }: HeroProps) {
                         style={{ color: 'rgba(245,243,255,0.3)' }}
                     >
                         <span className="live-dot" />
-                        {t('badge') || 'CYBERSECURITY · UZBEKISTAN · 2024'}
+                        {t('badge') || 'CYBERSECURITY · UZBEKISTAN · 2026'}
                         <span className="live-dot" />
                     </span>
                 </motion.div>
