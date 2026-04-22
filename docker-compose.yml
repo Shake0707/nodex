@@ -1,18 +1,84 @@
 services:
+  # ─── PostgreSQL Database ───
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-nodex}
+      POSTGRES_USER: ${POSTGRES_USER:-nodex}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports:
+      - "2050:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - nodex
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nodex} -d ${POSTGRES_DB:-nodex}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── PostgreSQL Backup (every 10 minutes) ───
+  pg_backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGDATABASE: ${POSTGRES_DB:-nodex}
+      PGUSER: ${POSTGRES_USER:-nodex}
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - ./backup:/backup
+    networks:
+      - nodex
+    entrypoint: >
+      sh -c '
+        mkdir -p /backup
+        echo "╔══════════════════════════════════════════╗"
+        echo "║  pg_backup: running every 10 minutes     ║"
+        echo "╚══════════════════════════════════════════╝"
+        while true; do
+          STAMP=$$(date +%Y-%m-%d_%H-%M-%S)
+          FILE="/backup/nodex_$${STAMP}.sql.gz"
+          echo "[$$STAMP] Dumping database..."
+          pg_dump | gzip > "$$FILE"
+          if [ $$? -eq 0 ]; then
+            echo "[$$STAMP] ✓ Backup saved: $$FILE"
+          else
+            echo "[$$STAMP] ✗ Backup FAILED"
+          fi
+          # Keep only the last 144 backups (= 24 hours of 10-min backups)
+          ls -1t /backup/nodex_*.sql.gz 2>/dev/null | tail -n +145 | xargs rm -f 2>/dev/null
+          sleep 600
+        done
+      '
+
   # ─── NestJS API ───
   api:
     build:
       context: .
       dockerfile: apps/api/Dockerfile
     restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
-      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-nodex}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-nodex}
       SESSION_SECRET: ${SESSION_SECRET}
       NODE_ENV: production
       PORT: 4000
       CORS_ORIGIN: ${CORS_ORIGIN}
+    ports:
+      - "2040:4000"
     volumes:
       - uploads:/app/uploads
+    networks:
+      - nodex
 
   # ─── Next.js Web ───
   web:
@@ -27,32 +93,30 @@ services:
       - api
     environment:
       NODE_ENV: production
+    ports:
+      - "2030:3000"
+    networks:
+      - nodex
 
-  # ─── Nginx ───
+  # ─── Nginx (reverse proxy only, NO SSL) ───
   nginx:
     image: nginx:alpine
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - "2080:2080"
     depends_on:
       - web
       - api
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - uploads:/app/uploads:ro
-      - certbot-etc:/etc/letsencrypt:ro
-      - certbot-www:/var/www/certbot:ro
-
-  # ─── Certbot (auto-renewal) ───
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - nodex
 
 volumes:
+  pgdata:
   uploads:
-  certbot-etc:
-  certbot-www:
+
+networks:
+  nodex:
+    driver: bridge

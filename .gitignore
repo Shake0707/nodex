@@ -50,6 +50,9 @@ CLAUDE.md
 DESIGN.md
 docs/
 
+# Database backups
+backup/
+
 # Screenshots (dev utility)
 temporary screenshots/
 screenshot.mjs
