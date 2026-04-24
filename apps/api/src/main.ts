@@ -10,6 +10,9 @@ import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  
+  // Trust the Nginx reverse proxy so secure cookies work
+  app.set('trust proxy', 1);
 
   // API prefix
   app.setGlobalPrefix('api');

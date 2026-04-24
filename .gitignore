@@ -34,7 +34,6 @@ yarn-error.log*
 
 # Prisma
 apps/api/prisma/*.db
-apps/api/prisma/migrations
 
 # Uploads
 apps/api/uploads/*
