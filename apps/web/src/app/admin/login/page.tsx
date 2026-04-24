@@ -22,7 +22,9 @@ export default function LoginPage() {
 
                 {login.isError && (
                     <div className="bg-red-50 text-red-500 px-4 py-3 rounded-lg text-sm mb-4 text-center">
-                        Login yoki parol noto&apos;g&apos;ri
+                        {(login.error as any)?.response?.status === 429
+                            ? "Juda ko'p urinishlar, iltimos biroz kutib turing"
+                            : "Login yoki parol noto'g'ri"}
                     </div>
                 )}
 
