@@ -13,7 +13,7 @@ interface HeroProps {
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] },
+    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
 });
 
 export default function Hero({ stats }: HeroProps) {
@@ -102,7 +102,7 @@ export default function Hero({ stats }: HeroProps) {
                 >
                     <span
                         className="block text-white"
-                        style={{ fontSize: 'clamp(64px, 10vw, 128px)' }}
+                        style={{ fontSize: 'clamp(52px, 10vw, 128px)' }}
                     >
                         NODEX
                     </span>
@@ -158,7 +158,7 @@ export default function Hero({ stats }: HeroProps) {
                     <div className="flex items-stretch">
                         {[
                             { end: stats.members_count, label: t('statMembers') },
-                            { end: stats.events_count,  label: t('statEvents') },
+                            { end: stats.events_count, label: t('statEvents') },
                             { end: stats.partners_count, label: t('statPartners') },
                         ].map((s, i) => (
                             <div key={i} className="flex items-stretch flex-1">
