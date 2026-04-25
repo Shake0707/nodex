@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { FadeIn, staggerContainer, staggerItem } from '@/components/animations';
 import { getUploadUrl, type Member } from '@/lib/api';
@@ -79,10 +80,12 @@ export default function Team({ members, locale }: TeamProps) {
                                         style={{ background: 'var(--color-surface-2)' }}
                                     >
                                         {photoUrl ? (
-                                            <img
+                                            <Image
                                                 src={photoUrl}
                                                 alt={getName(member)}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                fill
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                className="object-cover transition-transform duration-500 group-hover:scale-105"
                                             />
                                         ) : (
                                             <div

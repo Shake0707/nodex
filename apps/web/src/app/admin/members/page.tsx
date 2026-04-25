@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import Image from 'next/image';
 import { UserOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useMembers, useCreateMember, useUpdateMember, useDeleteMember } from '@/hooks/useMembers';
 import AdminModal from '@/components/admin/AdminModal';
@@ -88,7 +89,7 @@ export default function MembersPage() {
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">
                                         <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex items-center justify-center text-lg">
                                             {getImgUrl(m.photo_url) ? (
-                                                <img src={getImgUrl(m.photo_url)!} alt={m.name_uz} className="w-full h-full object-cover" />
+                                                <Image src={getImgUrl(m.photo_url)!} alt={m.name_uz} fill className="object-cover" />
                                             ) : <UserOutlined style={{ fontSize: 18, color: '#9ca3af' }} />}
                                         </div>
                                     </td>

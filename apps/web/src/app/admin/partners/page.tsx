@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import Image from 'next/image';
 import { BankOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { usePartners, useCreatePartner, useUpdatePartner, useDeletePartner } from '@/hooks/usePartners';
 import AdminModal from '@/components/admin/AdminModal';
@@ -67,7 +68,7 @@ export default function PartnersPage() {
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">
                                         <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex items-center justify-center text-lg">
                                             {getImgUrl(p.logo_image_url) ? (
-                                                <img src={getImgUrl(p.logo_image_url)!} alt={p.name} className="w-full h-full object-contain p-1" />
+                                                <Image src={getImgUrl(p.logo_image_url)!} alt={p.name} fill className="object-contain p-1" />
                                             ) : <BankOutlined style={{ fontSize: 18, color: '#9ca3af' }} />}
                                         </div>
                                     </td>

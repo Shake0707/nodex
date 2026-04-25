@@ -8,6 +8,13 @@ const nextConfig = {
     turbopack: {
         root: path.resolve(__dirname, '../..'),
     },
+    images: {
+        remotePatterns: [
+            { protocol: 'https', hostname: 'api.nodex.uz' },
+            { protocol: 'http',  hostname: 'localhost', port: '4000' },
+        ],
+        formats: ['image/avif', 'image/webp'],
+    },
 };
 
 export default withNextIntl(nextConfig);

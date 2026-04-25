@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { FlagOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useEvents, useDeleteEvent } from '@/hooks/useEvents';
 
@@ -59,7 +60,7 @@ export default function EventsPage() {
                                     <td className="px-6 py-3.5 text-sm border-b border-gray-50">
                                         <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex items-center justify-center text-lg">
                                             {getImgUrl(ev.preview_image_url) ? (
-                                                <img src={getImgUrl(ev.preview_image_url)!} alt={ev.title_uz} className="w-full h-full object-cover" />
+                                                <Image src={getImgUrl(ev.preview_image_url)!} alt={ev.title_uz} fill className="object-cover" />
                                             ) : <FlagOutlined style={{ fontSize: 18, color: '#9ca3af' }} />}
                                         </div>
                                     </td>

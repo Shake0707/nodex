@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
@@ -61,10 +62,12 @@ function EventCard({ event, locale }: EventCardProps) {
                     style={{ background: 'var(--color-surface-2)' }}
                 >
                     {img ? (
-                        <img
+                        <Image
                             src={img}
                             alt={getLocalizedField(event, 'title', locale)}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                     ) : (
                         <div

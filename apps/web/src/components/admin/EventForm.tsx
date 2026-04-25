@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent, lazy, Suspense } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCreateEvent, useUpdateEvent } from '@/hooks/useEvents';
 import ImageUploader from '@/components/admin/ImageUploader';
@@ -207,10 +208,12 @@ export default function EventForm({ initialData, isEditing }: Props) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-3">
                     {form.images.map((url, idx) => (
                         <div key={idx} className="relative group aspect-square rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
-                            <img
+                            <Image
                                 src={getUploadUrl(url) || url}
                                 alt={`Gallery ${idx + 1}`}
-                                className="w-full h-full object-cover"
+                                fill
+                                unoptimized={!(getUploadUrl(url) || url).startsWith('http')}
+                                className="object-cover"
                             />
                             <button
                                 type="button"

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getLocale, getTranslations } from 'next-intl/server';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getEvent, getUploadUrl, type Event } from '@/lib/api';
 import ImageGallery from '@/components/ImageGallery';
 import DOMPurify from 'isomorphic-dompurify';
@@ -143,10 +144,13 @@ export default async function EventDetailPage({ params }: Props) {
                             borderTop: '1px solid rgba(168,85,247,0.5)',
                         }}
                     >
-                        <img
+                        <Image
                             src={heroImage}
                             alt={title}
-                            className="w-full h-full object-cover"
+                            fill
+                            priority
+                            sizes="(max-width: 1024px) 100vw, 960px"
+                            className="object-cover"
                         />
 
                         {/* Corner brackets */}

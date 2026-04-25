@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import { InboxOutlined, CameraOutlined, ReloadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { uploadFile } from '@/lib/admin-api';
 
@@ -72,7 +73,7 @@ export default function ImageUploader({ value, onChange, label = 'Rasm' }: Image
             {/* Preview */}
             {previewUrl && (
                 <div className="relative w-full h-36 rounded-xl overflow-hidden border border-gray-200 bg-gray-50 group">
-                    <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                    <Image src={previewUrl} alt="Preview" fill unoptimized className="object-cover" />
                     {uploading && (
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                             <div className="w-8 h-8 border-3 border-white/30 border-t-white rounded-full animate-spin" />

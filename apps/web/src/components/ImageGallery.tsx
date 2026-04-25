@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 
 interface Props {
     images: string[];
@@ -60,10 +61,12 @@ export default function ImageGallery({ images, alt }: Props) {
                             transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
                         }}
                     >
-                        <img
+                        <Image
                             src={url}
                             alt={`${alt} — ${idx + 1}`}
-                            className="w-full h-full object-cover"
+                            fill
+                            sizes="(max-width: 768px) 50vw, 33vw"
+                            className="object-cover"
                             style={{
                                 transform: hovered === idx ? 'scale(1.04)' : 'scale(1)',
                                 transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
@@ -167,16 +170,24 @@ export default function ImageGallery({ images, alt }: Props) {
                     )}
 
                     {/* Image */}
-                    <img
-                        src={images[selected]}
-                        alt={`${alt} — ${selected + 1}`}
-                        className="max-w-[90vw] max-h-[85vh] object-contain"
+                    <div
+                        className="relative"
                         style={{
+                            width: '90vw',
+                            height: '85vh',
                             border: '1px solid rgba(0,212,255,0.15)',
                             boxShadow: '0 32px 80px rgba(0,0,0,0.7), 0 0 60px rgba(0,212,255,0.04)',
                         }}
                         onClick={(e) => e.stopPropagation()}
-                    />
+                    >
+                        <Image
+                            src={images[selected]}
+                            alt={`${alt} — ${selected + 1}`}
+                            fill
+                            sizes="90vw"
+                            className="object-contain"
+                        />
+                    </div>
 
                     {/* Next */}
                     {total > 1 && (

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { FadeIn, staggerContainer, staggerItem } from '@/components/animations';
@@ -79,10 +80,12 @@ export default function Events({ events, locale }: EventsProps) {
                                             style={{ minHeight: '240px', background: 'var(--color-surface-2)' }}
                                         >
                                             {(getUploadUrl(featured.preview_image_url) || getUploadUrl(featured.image_url)) ? (
-                                                <img
+                                                <Image
                                                     src={(getUploadUrl(featured.preview_image_url) || getUploadUrl(featured.image_url))!}
                                                     alt={getLocalizedField(featured, 'title', locale)}
-                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    fill
+                                                    sizes="(max-width: 768px) 100vw, 40vw"
+                                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                                                 />
                                             ) : (
                                                 <div
@@ -179,10 +182,12 @@ export default function Events({ events, locale }: EventsProps) {
                                                     style={{ background: 'var(--color-surface-2)' }}
                                                 >
                                                     {eventImage ? (
-                                                        <img
+                                                        <Image
                                                             src={eventImage}
                                                             alt={getLocalizedField(event, 'title', locale)}
-                                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                            fill
+                                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                                                         />
                                                     ) : (
                                                         <div

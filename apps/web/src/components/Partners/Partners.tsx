@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { FadeIn } from '@/components/animations';
 import { getUploadUrl, type Partner } from '@/lib/api';
@@ -15,9 +16,11 @@ function PartnerCard({ partner }: { partner: Partner }) {
         <div className="partner-card shrink-0 mx-4">
             <div className="partner-card__inner">
                 {logo ? (
-                    <img
+                    <Image
                         src={logo}
                         alt={partner.name}
+                        width={120}
+                        height={40}
                         className="partner-card__logo"
                     />
                 ) : (
