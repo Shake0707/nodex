@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getLocale, getTranslations } from 'next-intl/server';
 import Link from 'next/link';
-import Image from 'next/image';
-import { getEvent, getUploadUrl, type Event } from '@/lib/api';
+import { getEvent, getUploadUrl, PLACEHOLDER, type Event } from '@/lib/api';
+import SafeImage from '@/components/ui/SafeImage';
 import ImageGallery from '@/components/ImageGallery';
 import DOMPurify from 'isomorphic-dompurify';
 import { getLocalizedField, formatDate, MONTH_SHORT, stripHtml } from '@/lib/locale-helpers';
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         const event = await getEvent(Number(id));
         const title = getLocalizedField(event, 'title', locale);
         const desc = stripHtml(getLocalizedField(event, 'description', locale)).slice(0, 160);
-        const img = getUploadUrl(event.preview_image_url) || getUploadUrl(event.image_url);
+        const img = getUploadUrl(event.preview_image_url) || getUploadUrl(event.image_url) || `${SITE_URL}/placeholders/event-og.png`;
 
         return {
             title,
@@ -26,13 +26,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
                 description: desc,
                 url: `${SITE_URL}/${locale}/events/${id}`,
                 type: 'article',
-                ...(img ? { images: [{ url: img, width: 1200, height: 630, alt: title }] } : {}),
+                images: [{ url: img, width: 1200, height: 630, alt: title }],
             },
             twitter: {
                 card: 'summary_large_image',
                 title,
                 description: desc,
-                ...(img ? { images: [img] } : {}),
+                images: [img],
             },
         };
     } catch {
@@ -134,24 +134,24 @@ export default async function EventDetailPage({ params }: Props) {
                 </Link>
 
                 {/* Hero image */}
-                {heroImage && (
-                    <div
-                        className="relative w-full overflow-hidden mb-10"
-                        style={{
-                            aspectRatio: '21/10',
-                            background: 'var(--color-surface-2)',
-                            border: '1px solid rgba(255,255,255,0.05)',
-                            borderTop: '1px solid rgba(168,85,247,0.5)',
-                        }}
-                    >
-                        <Image
-                            src={heroImage}
-                            alt={title}
-                            fill
-                            priority
-                            sizes="(max-width: 1024px) 100vw, 960px"
-                            className="object-cover"
-                        />
+                <div
+                    className="relative w-full overflow-hidden mb-10"
+                    style={{
+                        aspectRatio: '21/10',
+                        background: 'var(--color-surface-2)',
+                        border: '1px solid rgba(255,255,255,0.05)',
+                        borderTop: '1px solid rgba(168,85,247,0.5)',
+                    }}
+                >
+                    <SafeImage
+                        src={heroImage}
+                        fallback={PLACEHOLDER.event}
+                        alt={title}
+                        fill
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 960px"
+                        className="object-cover"
+                    />
 
                         {/* Corner brackets */}
                         <span style={cornerStyle('tl')} />
@@ -213,8 +213,7 @@ export default async function EventDetailPage({ params }: Props) {
                             className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none"
                             style={{ background: 'linear-gradient(to top, rgba(4,4,8,0.65), transparent)' }}
                         />
-                    </div>
-                )}
+                </div>
 
                 {/* Title */}
                 <h1

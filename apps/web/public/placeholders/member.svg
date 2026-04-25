@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <pattern id="grid-m" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(168,85,247,0.07)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow-m" cx="50%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="rgba(168,85,247,0.14)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <clipPath id="clip-m">
+      <rect width="600" height="600"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="600" fill="#15151F"/>
+  <rect width="600" height="600" fill="url(#grid-m)"/>
+  <rect width="600" height="600" fill="url(#glow-m)"/>
+
+  <!-- Horizontal scan lines -->
+  <rect x="0" y="299" width="600" height="1" fill="rgba(168,85,247,0.12)"/>
+  <rect x="0" y="301" width="600" height="1" fill="rgba(0,212,255,0.05)"/>
+
+  <!-- Head silhouette: circle -->
+  <circle cx="300" cy="215" r="82" fill="rgba(168,85,247,0.07)" stroke="#A855F7" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <circle cx="300" cy="215" r="70" fill="rgba(168,85,247,0.05)" stroke="rgba(168,85,247,0.3)" stroke-width="1"/>
+
+  <!-- Body silhouette: shoulders arc -->
+  <path d="M 110 490 Q 110 345 300 345 Q 490 345 490 490" fill="rgba(168,85,247,0.07)" stroke="#A855F7" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M 140 490 Q 140 365 300 365 Q 460 365 460 490" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/>
+
+  <!-- Inner accent ring on head -->
+  <circle cx="300" cy="215" r="50" fill="none" stroke="rgba(0,212,255,0.15)" stroke-width="1"/>
+
+  <!-- Corner brackets — cyan -->
+  <path d="M 30 72 L 30 30 L 72 30" fill="none" stroke="#00D4FF" stroke-width="2" stroke-linecap="square"/>
+  <path d="M 528 30 L 570 30 L 570 72" fill="none" stroke="#00D4FF" stroke-width="2" stroke-linecap="square"/>
+  <path d="M 30 528 L 30 570 L 72 570" fill="none" stroke="#00D4FF" stroke-width="2" stroke-linecap="square"/>
+  <path d="M 570 528 L 570 570 L 528 570" fill="none" stroke="#00D4FF" stroke-width="2" stroke-linecap="square"/>
+
+  <!-- ID label top-left -->
+  <text x="46" y="48" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="10" fill="rgba(0,212,255,0.35)" letter-spacing="0.12em">MBR</text>
+
+  <!-- Bottom label -->
+  <text x="300" y="545" text-anchor="middle" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13" fill="rgba(0,212,255,0.38)" letter-spacing="0.18em">// NO_PHOTO</text>
+
+  <!-- Pixel dot accent center-head -->
+  <rect x="296" y="211" width="8" height="8" fill="rgba(168,85,247,0.4)" rx="1"/>
+</svg>

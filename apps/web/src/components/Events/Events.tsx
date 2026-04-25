@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { FadeIn, staggerContainer, staggerItem } from '@/components/animations';
-import { getUploadUrl, type Event } from '@/lib/api';
+import { getUploadUrl, PLACEHOLDER, type Event } from '@/lib/api';
+import SafeImage from '@/components/ui/SafeImage';
 import { getLocalizedField, formatDate, MONTH_NAMES, stripHtml } from '@/lib/locale-helpers';
 
 interface EventsProps {
@@ -79,20 +80,14 @@ export default function Events({ events, locale }: EventsProps) {
                                             className="w-full md:w-2/5 h-56 md:h-auto relative overflow-hidden shrink-0"
                                             style={{ minHeight: '240px', background: 'var(--color-surface-2)' }}
                                         >
-                                            {(getUploadUrl(featured.preview_image_url) || getUploadUrl(featured.image_url)) ? (
-                                                <Image
-                                                    src={(getUploadUrl(featured.preview_image_url) || getUploadUrl(featured.image_url))!}
-                                                    alt={getLocalizedField(featured, 'title', locale)}
-                                                    fill
-                                                    sizes="(max-width: 768px) 100vw, 40vw"
-                                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                                />
-                                            ) : (
-                                                <div
-                                                    className="absolute inset-0"
-                                                    style={{ background: 'linear-gradient(135deg, rgba(0,212,255,0.08), rgba(168,85,247,0.05))' }}
-                                                />
-                                            )}
+                                            <SafeImage
+                                                src={getUploadUrl(featured.preview_image_url) || getUploadUrl(featured.image_url)}
+                                                fallback={PLACEHOLDER.event}
+                                                alt={getLocalizedField(featured, 'title', locale)}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 40vw"
+                                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
                                             <div
                                                 className="absolute inset-0 pointer-events-none"
                                                 style={{ background: 'linear-gradient(to right, transparent 60%, rgba(14,14,24,0.6))' }}
@@ -181,20 +176,14 @@ export default function Events({ events, locale }: EventsProps) {
                                                     className="w-full h-40 relative overflow-hidden"
                                                     style={{ background: 'var(--color-surface-2)' }}
                                                 >
-                                                    {eventImage ? (
-                                                        <Image
-                                                            src={eventImage}
-                                                            alt={getLocalizedField(event, 'title', locale)}
-                                                            fill
-                                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                                        />
-                                                    ) : (
-                                                        <div
-                                                            className="absolute inset-0"
-                                                            style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.06), rgba(0,212,255,0.04))' }}
-                                                        />
-                                                    )}
+                                                    <SafeImage
+                                                        src={eventImage}
+                                                        fallback={PLACEHOLDER.event}
+                                                        alt={getLocalizedField(event, 'title', locale)}
+                                                        fill
+                                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    />
                                                     <div
                                                         className="absolute top-3 left-3 px-2 py-1 text-center"
                                                         style={{

@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { FadeIn } from '@/components/animations';
-import { getUploadUrl, type Partner } from '@/lib/api';
+import { getUploadUrl, PLACEHOLDER, type Partner } from '@/lib/api';
+import SafeImage from '@/components/ui/SafeImage';
 
 interface PartnersProps {
     partners: Partner[];
@@ -15,17 +15,14 @@ function PartnerCard({ partner }: { partner: Partner }) {
     const inner = (
         <div className="partner-card shrink-0 mx-4">
             <div className="partner-card__inner">
-                {logo ? (
-                    <Image
-                        src={logo}
-                        alt={partner.name}
-                        width={120}
-                        height={40}
-                        className="partner-card__logo"
-                    />
-                ) : (
-                    <span className="partner-card__placeholder">{partner.name.slice(0, 2).toUpperCase()}</span>
-                )}
+                <SafeImage
+                    src={logo}
+                    fallback={PLACEHOLDER.partner}
+                    alt={partner.name}
+                    width={120}
+                    height={40}
+                    className="partner-card__logo"
+                />
                 <span className="partner-card__name">{partner.name}</span>
             </div>
         </div>

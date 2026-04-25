@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { FadeIn, staggerContainer, staggerItem } from '@/components/animations';
-import { getUploadUrl, type Member } from '@/lib/api';
+import { getUploadUrl, PLACEHOLDER, type Member } from '@/lib/api';
+import SafeImage from '@/components/ui/SafeImage';
 
 interface TeamProps {
     members: Member[];
@@ -79,26 +79,14 @@ export default function Team({ members, locale }: TeamProps) {
                                         className="w-full h-56 relative overflow-hidden"
                                         style={{ background: 'var(--color-surface-2)' }}
                                     >
-                                        {photoUrl ? (
-                                            <Image
-                                                src={photoUrl}
-                                                alt={getName(member)}
-                                                fill
-                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                            />
-                                        ) : (
-                                            <div
-                                                className="absolute inset-0 flex items-center justify-center"
-                                                style={{
-                                                    background: 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(0,212,255,0.06))',
-                                                    fontSize: '48px',
-                                                    opacity: 0.4,
-                                                }}
-                                            >
-                                                ○
-                                            </div>
-                                        )}
+                                        <SafeImage
+                                            src={photoUrl}
+                                            fallback={PLACEHOLDER.member}
+                                            alt={getName(member)}
+                                            fill
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
 
                                         {/* Gradient overlay */}
                                         <div

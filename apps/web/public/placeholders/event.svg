@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <pattern id="grid-e" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,212,255,0.05)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow-e" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(168,85,247,0.13)"/>
+      <stop offset="60%" stop-color="rgba(0,212,255,0.04)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <linearGradient id="scan-e" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="transparent"/>
+      <stop offset="30%" stop-color="rgba(0,212,255,0.12)"/>
+      <stop offset="70%" stop-color="rgba(0,212,255,0.12)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background layers -->
+  <rect width="1200" height="630" fill="#15151F"/>
+  <rect width="1200" height="630" fill="url(#grid-e)"/>
+  <rect width="1200" height="630" fill="url(#glow-e)"/>
+
+  <!-- Vertical grid accent lines -->
+  <line x1="400" y1="0" x2="400" y2="630" stroke="rgba(168,85,247,0.06)" stroke-width="1"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="rgba(168,85,247,0.06)" stroke-width="1"/>
+
+  <!-- Horizontal scan lines -->
+  <rect x="0" y="310" width="1200" height="1" fill="url(#scan-e)"/>
+  <rect x="0" y="318" width="1200" height="1" fill="rgba(168,85,247,0.06)"/>
+
+  <!-- Glitch strips -->
+  <rect x="0" y="245" width="320" height="2" fill="rgba(0,212,255,0.07)"/>
+  <rect x="850" y="378" width="200" height="1" fill="rgba(168,85,247,0.1)"/>
+  <rect x="0" y="380" width="180" height="2" fill="rgba(0,212,255,0.05)"/>
+
+  <!-- Corner brackets — purple -->
+  <path d="M 44 94 L 44 44 L 94 44" fill="none" stroke="rgba(168,85,247,0.65)" stroke-width="2.5" stroke-linecap="square"/>
+  <path d="M 1106 44 L 1156 44 L 1156 94" fill="none" stroke="rgba(168,85,247,0.65)" stroke-width="2.5" stroke-linecap="square"/>
+  <path d="M 44 536 L 44 586 L 94 586" fill="none" stroke="rgba(168,85,247,0.65)" stroke-width="2.5" stroke-linecap="square"/>
+  <path d="M 1156 536 L 1156 586 L 1106 586" fill="none" stroke="rgba(168,85,247,0.65)" stroke-width="2.5" stroke-linecap="square"/>
+
+  <!-- Inner corner accents — cyan -->
+  <path d="M 80 90 L 80 80 L 90 80" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+  <path d="M 1110 80 L 1120 80 L 1120 90" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+  <path d="M 80 540 L 80 550 L 90 550" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+  <path d="M 1120 540 L 1120 550 L 1110 550" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+
+  <!-- Top ID tag -->
+  <text x="64" y="66" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" fill="rgba(168,85,247,0.4)" letter-spacing="0.14em">NODEX::EVT</text>
+
+  <!-- Eyebrow label -->
+  <text x="600" y="278" text-anchor="middle" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="12" fill="rgba(168,85,247,0.38)" letter-spacing="0.28em">// NODEX_CLUB</text>
+
+  <!-- Main title -->
+  <text x="600" y="334" text-anchor="middle" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="28" fill="rgba(0,212,255,0.58)" letter-spacing="0.3em" font-weight="700">EVENT.STREAM</text>
+
+  <!-- Underline -->
+  <rect x="440" y="348" width="320" height="1" fill="rgba(0,212,255,0.18)"/>
+
+  <!-- Sub label -->
+  <text x="600" y="382" text-anchor="middle" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="11" fill="rgba(255,255,255,0.14)" letter-spacing="0.22em">[ NO_IMAGE ]</text>
+
+  <!-- Bottom right watermark -->
+  <text x="1136" y="608" text-anchor="end" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.08)" letter-spacing="0.1em">nodex.uz</text>
+</svg>

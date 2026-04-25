@@ -64,3 +64,9 @@ export function getUploadUrl(path?: string | null): string | null {
     const base = API_BASE.replace('/api', '');
     return `${base}${path}`;
 }
+
+export const PLACEHOLDER = {
+    member: '/placeholders/member.svg',
+    partner: '/placeholders/partner.svg',
+    event: '/placeholders/event.svg',
+} as const;

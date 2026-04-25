@@ -2,12 +2,12 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { searchEvents } from '@/lib/admin-api';
-import { getUploadUrl, type Event } from '@/lib/api';
+import { getUploadUrl, PLACEHOLDER, type Event } from '@/lib/api';
+import SafeImage from '@/components/ui/SafeImage';
 import { getLocalizedField, MONTH_SHORT, stripHtml } from '@/lib/locale-helpers';
 
 // ─── Types ───
@@ -61,20 +61,14 @@ function EventCard({ event, locale }: EventCardProps) {
                     className="relative h-48 overflow-hidden"
                     style={{ background: 'var(--color-surface-2)' }}
                 >
-                    {img ? (
-                        <Image
-                            src={img}
-                            alt={getLocalizedField(event, 'title', locale)}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                    ) : (
-                        <div
-                            className="absolute inset-0"
-                            style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.06), rgba(0,212,255,0.04))' }}
-                        />
-                    )}
+                    <SafeImage
+                        src={img}
+                        fallback={PLACEHOLDER.event}
+                        alt={getLocalizedField(event, 'title', locale)}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
 
                     {/* Date badge */}
                     <div
