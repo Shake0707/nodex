@@ -1,0 +1,33 @@
+**/node_modules
+**/.next
+**/dist
+**/.turbo
+**/coverage
+.git
+.gitignore
+.vscode
+.idea
+
+# Env files — никогда не копируем в образ
+.env
+.env.*
+!.env.production.example
+**/.env
+**/.env.*
+
+# Локальные данные/мусор
+backup
+media
+uploads
+temporary screenshots
+*.log
+*.md
+!apps/api/prisma/**/*.md
+
+# Артефакты сборки api/prisma
+apps/api/dist
+apps/api/prisma-dist
+
+# Артефакты сборки web
+apps/web/.next
+apps/web/out
