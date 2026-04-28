@@ -44,6 +44,7 @@ export default async function Home() {
     } catch (e) {
         console.error('API fetch error:', e);
     }
+    
 
     return (
         <>

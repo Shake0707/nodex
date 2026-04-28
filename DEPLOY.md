@@ -1,6 +1,6 @@
 # Nodex — Инструкция по деплою на VPS
 
-> Стек: Docker Compose · Nginx · Let's Encrypt SSL · Neon PostgreSQL
+> Стек: Docker Compose · Nginx · Let's Encrypt SSL · PostgreSQL 16 (self-hosted)
 
 ---
 
@@ -60,8 +60,10 @@ nano .env
 Заполни все значения:
 
 ```env
-# Строку подключения берёшь из Neon Dashboard → вкладка Connection string
-DATABASE_URL=postgresql://neondb_owner:ПАРОЛЬ@ep-xxx.neon.tech/neondb?sslmode=require
+# PostgreSQL (БД работает в Docker-контейнере — DATABASE_URL собирается автоматически)
+POSTGRES_DB=nodex
+POSTGRES_USER=nodex
+POSTGRES_PASSWORD=сюда_надёжный_пароль_min_16_символов
 
 # Случайная строка минимум 32 символа (можно сгенерировать: openssl rand -hex 32)
 SESSION_SECRET=сюда_вставь_случайную_строку
@@ -233,6 +235,24 @@ docker system df
 
 ---
 
+## Бэкапы базы данных
+
+Сервис `pg_backup` автоматически делает дамп каждые 10 минут в папку `./backup/` на хосте. Хранятся последние 144 файла (= 24 часа).
+
+Ручной бэкап:
+
+```bash
+docker compose exec postgres pg_dump -U nodex nodex | gzip > backup_manual_$(date +%F).sql.gz
+```
+
+Восстановление из бэкапа:
+
+```bash
+gunzip -c backup/nodex_2026-04-26_12-00-00.sql.gz | docker compose exec -T postgres psql -U nodex -d nodex
+```
+
+---
+
 ## Возможные проблемы
 
 ### Сайт не открывается по домену
@@ -248,4 +268,4 @@ docker system df
 - Посмотри логи: `docker compose logs api`
 
 ### Контейнер api падает сразу после старта
-- Скорее всего неверный `DATABASE_URL` — проверь строку подключения в Neon Dashboard
+- Скорее всего `POSTGRES_PASSWORD` не задан в `.env` или контейнер `postgres` не поднялся. Проверь: `docker compose ps postgres` и `docker compose logs postgres`
