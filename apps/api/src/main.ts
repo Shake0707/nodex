@@ -53,7 +53,7 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.SECURE_COOKIES === 'true',
         sameSite: 'strict',
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
