@@ -35,8 +35,11 @@ export class AuthController {
       body.password,
     );
 
-    req.session.adminId = admin.id;
-    req.session.isAuthenticated = true;
+    await new Promise<void>((resolve, reject) => {
+      req.session.adminId = admin.id;
+      req.session.isAuthenticated = true;
+      req.session.save((err) => (err ? reject(err) : resolve()));
+    });
 
     return { success: true, data: admin };
   }
