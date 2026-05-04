@@ -73,7 +73,6 @@ services:
       NODE_ENV: production
       PORT: 4000
       CORS_ORIGIN: ${CORS_ORIGIN}
-      SECURE_COOKIES: ${SECURE_COOKIES:-true}
     ports:
       - "2040:4000"
     volumes:

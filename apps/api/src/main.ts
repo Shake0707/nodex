@@ -11,9 +11,6 @@ import helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   
-  // Trust the Nginx reverse proxy so secure cookies work
-  app.set('trust proxy', 1);
-
   // API prefix
   app.setGlobalPrefix('api');
 
@@ -53,7 +50,7 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.SECURE_COOKIES === 'true',
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
