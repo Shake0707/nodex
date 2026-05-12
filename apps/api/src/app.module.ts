@@ -8,6 +8,7 @@ import { EventsModule } from './events/events.module';
 import { PartnersModule } from './partners/partners.module';
 import { UploadModule } from './upload/upload.module';
 import { StatsModule } from './stats/stats.module';
+import { SurveysModule } from './surveys/surveys.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { StatsModule } from './stats/stats.module';
     PartnersModule,
     UploadModule,
     StatsModule,
+    SurveysModule,
   ],
   providers: [
     {

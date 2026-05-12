@@ -56,3 +56,12 @@ export const fetchStats = () => api.get('/stats').then((r) => r.data);
 /* ========== Public Events Search ========== */
 export const searchEvents = (params: { q?: string; page?: number; limit?: number; sort?: string }) =>
     api.get('/events/search', { params }).then((r) => r.data);
+
+/* ========== Surveys ========== */
+export const fetchSurveys = () => api.get('/surveys').then((r) => r.data.data);
+export const fetchSurvey = (id: number) => api.get(`/surveys/${id}`).then((r) => r.data.data);
+export const createSurvey = (data: Record<string, unknown>) => api.post('/surveys', data);
+export const updateSurvey = (id: number, data: Record<string, unknown>) => api.put(`/surveys/${id}`, data);
+export const deleteSurvey = (id: number) => api.delete(`/surveys/${id}`);
+export const fetchSurveyRegistrations = (id: number) =>
+    api.get(`/surveys/${id}/registrations`).then((r) => r.data.data);

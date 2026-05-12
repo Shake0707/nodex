@@ -93,6 +93,7 @@ services:
       - api
     environment:
       NODE_ENV: production
+      INTERNAL_API_URL: http://api:4000/api
     ports:
       - "2030:3000"
     networks:

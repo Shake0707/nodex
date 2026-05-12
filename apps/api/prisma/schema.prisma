@@ -59,6 +59,46 @@ model Admin {
   username      String   @unique
   password_hash String
   created_at    DateTime @default(now())
+  surveys       Survey[]
 
   @@map("admins")
+}
+
+model Survey {
+  id               Int                  @id @default(autoincrement())
+  title_uz         String
+  title_en         String
+  title_ru         String
+  description_uz   String
+  description_en   String
+  description_ru   String
+  marquee_text_uz  String
+  marquee_text_en  String
+  marquee_text_ru  String
+  is_active        Boolean              @default(false)
+  starts_at        DateTime
+  ends_at          DateTime?
+  registrations    SurveyRegistration[]
+  created_by_id    Int?
+  created_by       Admin?               @relation(fields: [created_by_id], references: [id], onDelete: SetNull)
+  created_at       DateTime             @default(now())
+  updated_at       DateTime             @updatedAt
+
+  @@map("surveys")
+}
+
+model SurveyRegistration {
+  id           Int      @id @default(autoincrement())
+  survey_id    Int
+  survey       Survey   @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  first_name   String
+  last_name    String
+  age          Int
+  email        String
+  telegram     String?
+  school       String
+  grade        String
+  submitted_at DateTime @default(now())
+
+  @@map("survey_registrations")
 }

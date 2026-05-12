@@ -8,6 +8,7 @@ import type { Stats } from '@/lib/api';
 
 interface HeroProps {
     stats: Stats;
+    hasSurveyBanner?: boolean;
 }
 
 const fadeUp = (delay = 0) => ({
@@ -16,14 +17,14 @@ const fadeUp = (delay = 0) => ({
     transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
 });
 
-export default function Hero({ stats }: HeroProps) {
+export default function Hero({ stats, hasSurveyBanner }: HeroProps) {
     const t = useTranslations('hero');
 
     return (
         <section
             id="hero"
             className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-            style={{ paddingTop: '56px', background: 'var(--color-bg)' }}
+            style={{ paddingTop: hasSurveyBanner ? '0' : '56px', background: 'var(--color-bg)' }}
         >
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#A855F7]/[0.04] via-transparent to-[#00D4FF]/[0.04] blur-3xl pointer-events-none" />

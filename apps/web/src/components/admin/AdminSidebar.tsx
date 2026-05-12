@@ -9,6 +9,7 @@ import {
     UsergroupAddOutlined,
     ThunderboltOutlined,
     LogoutOutlined,
+    FormOutlined,
 } from '@ant-design/icons';
 import { useLogout } from '@/hooks/useAuth';
 
@@ -17,6 +18,7 @@ const links = [
     { href: '/admin/members', label: 'Members', Icon: TeamOutlined },
     { href: '/admin/events', label: 'Events', Icon: TrophyOutlined },
     { href: '/admin/partners', label: 'Partners', Icon: UsergroupAddOutlined },
+    { href: '/admin/surveys', label: 'Surveys', Icon: FormOutlined },
 ];
 
 export default function AdminSidebar() {
